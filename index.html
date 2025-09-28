@@ -7,6 +7,7 @@
   <title>NUTRIMANDALAS — GENERATOR</title>
   <style>
     :root{ --blue:#001aff; --row-h:52px; --pad:6px; --label-w:150px; }
+@media (max-width: 480px){ :root{ --label-w:110px; } .controls label{ font-size:12px; } }
     *{box-sizing:border-box}
     body{margin:0;background:#fff;color:var(--blue);font-family:system-ui,-apple-system,Segoe UI,Roboto,"Footlight MT Light",sans-serif;display:flex;flex-direction:column;align-items:center;gap:10px;padding:14px;text-align:center}
     .brand{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;max-width:1180px}
@@ -35,11 +36,12 @@
     input[type="range"]::-moz-range-thumb{width:14px;height:14px;border:none;border-radius:50%;background:var(--blue);box-shadow:0 0 0 2px #fff inset, 0 0 6px rgba(0,26,255,.7)}
     .val{font-variant-numeric:tabular-nums;border:2px solid var(--blue);border-radius:10px;padding:1px 6px;min-width:52px;text-align:center;color:var(--blue);background:#fff;font-size:11px}
     .stage{position:relative;display:inline-block;padding-right:380px}
-    canvas{border:2px solid var(--blue);border-radius:12px;width:640px;max-width:88vw;height:auto;background:#fff;box-shadow:0 0 10px rgba(0,26,255,.18)}
+@media (max-width: 820px){ .stage{ padding-right:0; } }
+    canvas{border:2px solid var(--blue);border-radius:12px;width:100%;max-width:640px;height:auto;background:#fff;box-shadow:0 0 10px rgba(0,26,255,.18)} canvas{touch-action:none;}
     .overlay{position:absolute;z-index:5;display:none}
     .overlay.show{display:flex}
     .overlay.side{top:50%;right:8px;transform:translateY(-50%);flex-direction:column}
-    .overlay.card{background:#f7f9ff;border:2px solid var(--blue);border-radius:12px;padding:10px;gap:8px;align-items:center;justify-content:center;box-shadow:0 10px 18px rgba(0,26,255,.18);width:320px;max-height:85vh;overflow:auto}
+    .overlay.card{background:#f7f9ff;border:2px solid var(--blue);border-radius:12px;padding:10px;gap:8px;align-items:center;justify-content:center;box-shadow:0 10px 18px rgba(0,26,255,.18);width:90vw; max-width:320px;max-height:85vh;overflow:auto}
     #creditsOverlay{ font-size:12px; line-height:1.25; text-align:left }
     #creditsOverlay p{ margin:.3em 0 }
     .palette{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
@@ -751,28 +753,39 @@ ${startxref}
       }
       if(tool==='bucket'){ const pt=getClickXY(e); floodFill(pt.x,pt.y); }
     });
-    canvas.addEventListener('mousedown',function(e){
-      if(panMode){
-        draggingPan = true;
-        panStart = { x: e.clientX, y: e.clientY, ox: tileOffsetX, oy: tileOffsetY };
-        updateCursor(); e.preventDefault(); return;
-      }
-      if(!paintOn || tool!=='brush') return;
-      ensurePaint(); drawing=true; const pt=getClickXY(e);
-      pctx.save(); pctx.globalCompositeOperation= erase? 'destination-out':'source-over'; pctx.lineCap='round'; pctx.lineJoin='round'; pctx.strokeStyle=currentColor; pctx.lineWidth=parseInt(brushSizeEl.value||20,10); pctx.beginPath(); pctx.moveTo(pt.x,pt.y);
-    });
-    canvas.addEventListener('mousemove',function(e){
-      if(panMode && draggingPan){
-        tileOffsetX = panStart.ox + (e.clientX - panStart.x);
-        tileOffsetY = panStart.oy + (e.clientY - panStart.y);
-        render(); return;
-      }
-      if(!drawing || !paintOn || tool!=='brush') return; const pt=getClickXY(e); pctx.lineTo(pt.x,pt.y); pctx.stroke(); render();
-    });
-    window.addEventListener('mouseup',function(){
-      if(panMode && draggingPan){ draggingPan=false; updateCursor(); }
-      if(drawing){ drawing=false; pctx.closePath(); }
-    });
+    canvas.addEventListener('pointerdown', function(e){
+  // Prevent page scroll when interacting
+  if(e.pointerType === 'touch') e.preventDefault();
+  if(panMode){
+    draggingPan = true;
+    panStart = { x: e.clientX, y: e.clientY, ox: tileOffsetX, oy: tileOffsetY };
+    try{ canvas.setPointerCapture(e.pointerId); }catch(_){ }
+    updateCursor(); return;
+  }
+  if(!paintOn || tool!=='brush') return;
+  ensurePaint(); drawing=true; const pt=getClickXY(e);
+  pctx.save(); pctx.globalCompositeOperation= erase? 'destination-out':'source-over';
+  pctx.lineCap='round'; pctx.lineJoin='round'; pctx.strokeStyle=currentColor;
+  pctx.lineWidth=parseInt(brushSizeEl.value||20,10); pctx.beginPath(); pctx.moveTo(pt.x,pt.y);
+});
+    canvas.addEventListener('pointermove', function(e){
+  if(e.pointerType === 'touch') e.preventDefault();
+  if(panMode && draggingPan){
+    tileOffsetX = panStart.ox + (e.clientX - panStart.x);
+    tileOffsetY = panStart.oy + (e.clientY - panStart.y);
+    render(); return;
+  }
+  if(!drawing || !paintOn || tool!=='brush') return; const pt=getClickXY(e);
+  pctx.lineTo(pt.x,pt.y); pctx.stroke(); render();
+});
+    window.addEventListener('pointerup', function(){
+  if(panMode && draggingPan){ draggingPan=false; updateCursor(); }
+  if(drawing){ drawing=false; pctx.closePath(); }
+});
+window.addEventListener('pointercancel', function(){
+  if(panMode && draggingPan){ draggingPan=false; updateCursor(); }
+  if(drawing){ drawing=false; try{ pctx.closePath(); }catch(_){ } }
+});
 
     // Flechas para mover mosaico en modo mano
     document.addEventListener('keydown', function(e){
