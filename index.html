@@ -66,7 +66,6 @@ canvas {
 }
 
 
-/* === Patch móvil: gestos nativos por defecto === */
 canvas { touch-action: auto; }
 .touch-block { touch-action: none; }
 </style>
@@ -75,7 +74,7 @@ canvas { touch-action: auto; }
 
   <div class="brand">
     <img class="logo" src="NUTRIMANDALAS.png" alt="NUTRIMANDALAS logo (left)">
-    <h1>NUTRIMANDALAS — GENERATOR</h1>
+    <h1>NUTRIMANDALAS - GENERATOR</h1>
     <img class="logo" src="ibima.png" alt="IBIMA Plataforma BIONAND logo (right)">
   </div>
 
@@ -86,15 +85,15 @@ canvas { touch-action: auto; }
     <button id="fileBtn">📁 Select file</button><span id="fileName" style="margin-left:8px">No file chosen</span>
     <button id="paintToggle" aria-pressed="false">🔆 Color</button>
     <button id="mosaicToggle" aria-pressed="true" title="Toggle mosaic">🔥</button>
-    <button id="lanternToggle" aria-pressed="false" title="Mandala único centrado">🏮</button>
-    <button id="panToggle" aria-pressed="false" title="Pan mosaic">💃🏽</button>
+    <button id="lanternToggle" aria-pressed="false" title="Only">🏮</button>
+    <button id="panToggle" aria-pressed="false" title="Moving">💃🏽</button>
     <button id="download">⬇️ Download</button>
     <button id="wave" aria-pressed="false">🌊 Credits</button>
   </div>
 
   <div class="controls">
-    <div class="row"><label for="imgScale">Image scale</label><div class="right"><span class="val" id="imgScaleVal">100%</span><input id="imgScale" type="range" min="10" max="600" step="1" value="100"></div></div>
-    <div class="row"><label for="tile">Tile size</label><div class="right"><span class="val" id="tileVal">180 px</span><input id="tile" type="range" min="60" max="800" step="10" value="180"></div></div>
+    <div class="row"><label for="imgScale">Image scale</label><div class="right"><span class="val" id="imgScaleVal">100%</span><input id="imgScale" type="range" min="10" max="800" step="1" value="100"></div></div>
+    <div class="row"><label for="tile">Tile size</label><div class="right"><span class="val" id="tileVal">180 px</span><input id="tile" type="range" min="40" max="800" step="10" value="180"></div></div>
     <div class="row"><label for="borderWidth">Outline width</label><div class="right"><span class="val" id="borderWidthVal">6 px</span><input id="borderWidth" type="range" min="1" max="20" step="1" value="6"></div></div>
     <div class="row"><label for="stroke">Stroke width</label><div class="right"><span class="val" id="strokeVal">1.8</span><input id="stroke" type="range" min="0.5" max="5" step="0.1" value="1.8"></div></div>
 
@@ -103,8 +102,8 @@ canvas { touch-action: auto; }
     <div class="row"><label for="edgeThr">Edge sensitivity</label><div class="right"><span class="val" id="edgeThrVal">35</span><input id="edgeThr" type="range" min="10" max="120" step="1" value="35"></div></div>
     <div class="row"><label for="thrFixed">Fixed threshold</label><div class="right"><span class="val" id="thrFixedVal">200</span><input id="thrFixed" type="range" min="0" max="255" step="1" value="200"></div></div>
 
-    <div class="row"><label for="rings">Rings</label><div class="right"><span class="val" id="ringsVal">10</span><input id="rings" type="range" min="3" max="32" step="1" value="10"></div></div>
-    <div class="row"><label for="spokes">Spokes</label><div class="right"><span class="val" id="spokesVal">20</span><input id="spokes" type="range" min="6" max="64" step="1" value="20"></div></div>
+    <div class="row"><label for="rings">Rings</label><div class="right"><span class="val" id="ringsVal">10</span><input id="rings" type="range" min="2" max="32" step="1" value="10"></div></div>
+    <div class="row"><label for="spokes">Spokes</label><div class="right"><span class="val" id="spokesVal">20</span><input id="spokes" type="range" min="4" max="64" step="1" value="20"></div></div>
     <div class="row"><label for="style">Motif shape</label><div class="right"><select id="style">
       <option value="ellipse" selected>Ellipses (petals)</option>
       <option value="star">Star</option>
@@ -235,7 +234,7 @@ canvas { touch-action: auto; }
         shapes:['Ellipses (petals)','Star','Triangles','Hexagons','Squares/diamonds','Flower','Spiral','Waves','Grid','Lines & rings only'],
         invKeepIn:'Keep inside', invKeepOut:'Keep outside',
         mosaicTitleOn:'Toggle mosaic (on)', mosaicTitleOff:'Toggle mosaic (off)',
-        panOn:'Pan mosaic (hand)', panOff:'Pan mosaic',
+        panOn:'Moving (hand)', panOff:'Static',
         alertLoad:'Load an image and generate the mandala first.',
         creditsHTML: `<div>
   <div><strong><u>NUTRIMANDALAS — GENERATOR</u></strong></div>
