@@ -47,7 +47,29 @@
     .palette{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
     .swatch{width:20px;height:20px;border-radius:50%;border:2px solid var(--blue);background:var(--c);cursor:pointer}
     #info{white-space:normal;max-width:980px;margin-top:6px}
-  </style>
+  
+/* ===== MOBILE FIXES ===== */
+body {
+  overscroll-behavior: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+canvas {
+  touch-action: none;
+}
+@media (max-width: 900px){
+  .stage { padding-right: 0 !important; }
+}
+@media (max-width: 480px){
+  button { font-size: 16px !important; padding: 10px 16px !important; }
+}
+
+
+/* === Patch móvil: gestos nativos por defecto === */
+canvas { touch-action: auto; }
+.touch-block { touch-action: none; }
+</style>
 </head>
 <body>
 
@@ -64,6 +86,7 @@
     <button id="fileBtn">📁 Select file</button><span id="fileName" style="margin-left:8px">No file chosen</span>
     <button id="paintToggle" aria-pressed="false">🔆 Color</button>
     <button id="mosaicToggle" aria-pressed="true" title="Toggle mosaic">🔥</button>
+    <button id="lanternToggle" aria-pressed="false" title="Mandala único centrado">🏮</button>
     <button id="panToggle" aria-pressed="false" title="Pan mosaic">💃🏽</button>
     <button id="download">⬇️ Download</button>
     <button id="wave" aria-pressed="false">🌊 Credits</button>
@@ -527,7 +550,17 @@
         const g=document.createElement('canvas'); g.width=W; g.height=H; const gx=g.getContext('2d');
         gx.fillStyle='#fff'; gx.fillRect(0,0,W,H);
         if(mosaicVisible && pat) fillPatternWithOffset(gx, pat, W, H, tileSize);
-        guideData=gx.getImageData(0,0,W,H);
+        // --- FIX: fondo blanco detrás de la guía (para evitar transparencias que bloqueen el Fill)
+        (function(){
+          var __ctx = gx;
+          __ctx.save();
+          __ctx.globalCompositeOperation = 'destination-over';
+          __ctx.fillStyle = '#ffffff';
+          var __c = __ctx.canvas;
+          __ctx.fillRect(0, 0, __c.width, __c.height);
+          __ctx.restore();
+        })();
+                guideData=gx.getImageData(0,0,W,H);
         if(paintLayer){ ctxTarget.drawImage(paintLayer,0,0,W,H); }
         return;
       }
@@ -555,7 +588,17 @@
         gx.drawImage(mask,0,0);
       }
       gx.drawImage(border,0,0);
-      guideData=gx.getImageData(0,0,W,H);
+      // --- FIX: fondo blanco detrás de la guía (para evitar transparencias que bloqueen el Fill)
+      (function(){
+        var __ctx = gx;
+        __ctx.save();
+        __ctx.globalCompositeOperation = 'destination-over';
+        __ctx.fillStyle = '#ffffff';
+        var __c = __ctx.canvas;
+        __ctx.fillRect(0, 0, __c.width, __c.height);
+        __ctx.restore();
+      })();
+            guideData=gx.getImageData(0,0,W,H);
 
       if(paintLayer){ ctxTarget.drawImage(paintLayer,0,0,W,H); }
     }
@@ -675,19 +718,35 @@ ${startxref}
 
       if(fmt==='png'){
         const url=off.toDataURL('image/png');
-        const a=document.createElement('a'); a.download='nutrimandala.png'; a.href=url; a.click();
+        const a=document.createElement('a'); a.download='nutrimandala.png'; a.href=url; if(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)){
+          window.open(a.href, '_blank');
+        } else {
+          a.click();
+        }
       } else if(fmt==='jpeg'){
         const url=off.toDataURL('image/jpeg',0.98);
-        const a=document.createElement('a'); a.download='nutrimandala.jpg'; a.href=url; a.click();
+        const a=document.createElement('a'); a.download='nutrimandala.jpg'; a.href=url; if(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)){
+          window.open(a.href, '_blank');
+        } else {
+          a.click();
+        }
       } else if(fmt==='pdf'){
         const imgData = ox.getImageData(0,0,W,H).data;
         const rgb = new Uint8Array(W*H*3);
         for(let i=0,j=0;i<imgData.length;i+=4){ rgb[j++]=imgData[i]; rgb[j++]=imgData[i+1]; rgb[j++]=imgData[i+2]; }
         const blob=makePDFfromRGB(rgb,W,H);
-        const a=document.createElement('a'); a.download='nutrimandala.pdf'; const url=URL.createObjectURL(blob); a.href=url; a.click(); setTimeout(()=>URL.revokeObjectURL(url),2000);
+        const a=document.createElement('a'); a.download='nutrimandala.pdf'; const url=URL.createObjectURL(blob); a.href=url; if(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)){
+          window.open(a.href, '_blank');
+        } else {
+          a.click();
+        } setTimeout(()=>URL.revokeObjectURL(url),2000);
       } else if(fmt==='tiff'){
         const blob=makeTIFFfromCanvas(off);
-        const a=document.createElement('a'); a.download='nutrimandala.tif'; const url=URL.createObjectURL(blob); a.href=url; a.click(); setTimeout(()=>URL.revokeObjectURL(url),2000);
+        const a=document.createElement('a'); a.download='nutrimandala.tif'; const url=URL.createObjectURL(blob); a.href=url; if(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)){
+          window.open(a.href, '_blank');
+        } else {
+          a.click();
+        } setTimeout(()=>URL.revokeObjectURL(url),2000);
       }
     });
 
@@ -704,7 +763,14 @@ ${startxref}
     let paintOn=false, paintLayer=null, pctx=null, currentColor='#ff9900', erase=false, tool='bucket', drawing=false;
     function ensurePaint(){ if(!paintLayer){ paintLayer=document.createElement('canvas'); paintLayer.width=canvas.width; paintLayer.height=canvas.height; pctx=paintLayer.getContext('2d'); } }
     function getClickXY(evt){ const r=canvas.getBoundingClientRect(); const x=(evt.clientX-r.left)*(canvas.width/r.width); const y=(evt.clientY-r.top)*(canvas.height/r.height); return {x:Math.floor(x),y:Math.floor(y)}; }
-    function isBarrier(i,data){ const r=data[i],g=data[i+1],b=data[i+2]; return (r+g+b) < 128; }
+    function isBarrier(i,data){
+  var a = data[i+3];
+  if (a < 8) return false; // transparente: no es barrera
+  var r=data[i], g=data[i+1], b=data[i+2];
+  // Umbral por luminancia (más robusto que suma RGB)
+  var y = 0.299*r + 0.587*g + 0.114*b;
+  return y < 90; // línea/borde oscura => barrera
+}
     function hexToRGB(hex){ const v=hex.replace('#',''); const n=parseInt(v,16); return [(n>>16)&255,(n>>8)&255,n&255]; }
     function updateCursor(){
       if(panMode){ canvas.style.cursor = draggingPan ? 'grabbing' : 'grab'; return; }
@@ -719,7 +785,21 @@ ${startxref}
       const mxData= lastMask ? lastMask.getContext('2d').getImageData(0,0,w,h).data : null;
       const painted=pctx.getImageData(0,0,w,h); const pd=painted.data;
       const idx=(xx,yy)=>(yy*w+xx)*4; const s=idx(x,y);
-      if(isBarrier(s,g)) return;
+            // Si el clic cae sobre una línea, busca un píxel vecino válido como semilla
+      if (isBarrier(s, g)){
+        let found = false;
+        for (let r=1; r<=2 && !found; r++){
+          for (let dy=-r; dy<=r && !found; dy++){
+            for (let dx=-r; dx<=r && !found; dx++){
+              const nx = x+dx, ny = y+dy; if(nx<0||ny<0||nx>=w||ny>=h) continue;
+              const ni = idx(nx,ny);
+              if (!isBarrier(ni, g)) { x = nx; y = ny; found = true; }
+            }
+          }
+        }
+        if(!found) return;
+      }
+
       const clickInside = !mxData ? true : (mxData[s+3]>0);
       const rgb=hexToRGB(currentColor); const seen=new Uint8Array(w*h); const q=[{x,y}];
       const cond=function(xx,yy){
@@ -936,7 +1016,164 @@ window.addEventListener('pointercancel', function(){
 
     // Inicial
     applyInitial();
-  })();
+  
+    // ======== MEJORA V6: Flood-Fusion + 🏮 con pan libre + export igual a vista ========
+    let lanternOn = false;
+    const lanternBtn = document.getElementById('lanternToggle');
+    let __rafPending = false;
+    function scheduleRender(){
+      if(__rafPending) return;
+      __rafPending = true;
+      requestAnimationFrame(function(){ __rafPending=false; try{ render(); }catch(e){ console.error(e); } });
+    }
+
+    if(lanternBtn){
+      lanternBtn.addEventListener('click', function(){
+        lanternOn = !lanternOn;
+        lanternBtn.setAttribute('aria-pressed', lanternOn ? 'true' : 'false');
+        scheduleRender();
+      });
+    }
+
+    // SHIFT + arrastrar siempre mueve el mosaico/mandala sin tener que activar la mano
+    (function(){
+      let draggingShift = false;
+      let start = null;
+      const stage = document.getElementById('c');
+      if(!stage) return;
+      stage.addEventListener('pointerdown', function(e){
+        if(!e.shiftKey) return;
+        e.preventDefault();
+        draggingShift = true;
+        start = { x:e.clientX, y:e.clientY, ox:tileOffsetX, oy:tileOffsetY };
+        stage.setPointerCapture && stage.setPointerCapture(e.pointerId);
+      });
+      stage.addEventListener('pointermove', function(e){
+        if(!draggingShift) return;
+        const dx = e.clientX - start.x;
+        const dy = e.clientY - start.y;
+        tileOffsetX = start.ox + dx;
+        tileOffsetY = start.oy + dy;
+        scheduleRender();
+      });
+      function stop(){ draggingShift=false; start=null; }
+      stage.addEventListener('pointerup', stop);
+      stage.addEventListener('pointercancel', stop);
+      stage.addEventListener('lostpointercapture', stop);
+    })();
+
+    // Overwrite the pattern filler: when 🏮, draw a single tile centered but offset by tileOffsetX/Y
+    (function(){
+      const __orig = (typeof fillPatternWithOffset==='function') ? fillPatternWithOffset : null;
+      if(!__orig) return;
+      fillPatternWithOffset = function(ctxTarget, pat, W, H, tileSize){
+        if(!pat){ return; }
+        if(lanternOn){
+          try{
+            let tileCanvas = (typeof makeMandalaTile === 'function') ? makeMandalaTile(tileSize) : null;
+            const ox = ((tileOffsetX % tileSize) + tileSize) % tileSize;
+            const oy = ((tileOffsetY % tileSize) + tileSize) % tileSize;
+            const cx = Math.round(W/2 - tileSize/2 + ox);
+            const cy = Math.round(H/2 - tileSize/2 + oy);
+            ctxTarget.save();
+            ctxTarget.imageSmoothingEnabled = true;
+            ctxTarget.imageSmoothingQuality = 'high';
+            if(tileCanvas && tileCanvas.width){
+              ctxTarget.drawImage(tileCanvas, cx, cy);
+            } else {
+              if(pat.setTransform){
+                const m = new DOMMatrix(); m.translateSelf(cx, cy); pat.setTransform(m);
+              } else { ctxTarget.translate(cx, cy); }
+              ctxTarget.fillStyle = pat;
+              ctxTarget.fillRect(0,0,tileSize,tileSize);
+            }
+            ctxTarget.restore();
+          }catch(err){
+            console.error('🏮 draw error, fallback', err);
+            return __orig(ctxTarget, pat, W, H, tileSize);
+          }
+        } else {
+          return __orig(ctxTarget, pat, W, H, tileSize);
+        }
+      };
+    })();
+
+    // Flood-Fusion: barrera = unión de guía + canvas visible (mosaico incluido)
+    (function(){
+      const _oldFlood = floodFill;
+      floodFill = function(x,y){
+        if(!guideData){ render(); if(!guideData) return; }
+        ensurePaint();
+        const w=canvas.width,h=canvas.height;
+        const g=guideData.data;
+        let screen=null; try{ screen=ctx.getImageData(0,0,w,h).data; }catch(_){}
+        const painted=pctx.getImageData(0,0,w,h); const pd=painted.data;
+        const idx=(xx,yy)=>(yy*w+xx)*4;
+        let s=idx(x,y);
+        function isBar(i){
+          if(g && g[i+3]>7){
+            const y0 = 0.299*g[i] + 0.587*g[i+1] + 0.114*g[i+2];
+            if (y0 < 140) return true;
+          }
+          if(screen && screen[i+3]>7){
+            const y1 = 0.299*screen[i] + 0.587*screen[i+1] + 0.114*screen[i+2];
+            if (y1 < 150) return true;
+          }
+          return false;
+        }
+        if (isBar(s)){
+          let found=false;
+          for (let r=1; r<=2 && !found; r++){
+            for (let dy=-r; dy<=r && !found; dy++){
+              for (let dx=-r; dx<=r && !found; dx++){
+                const nx=x+dx, ny=y+dy; if(nx<0||ny<0||nx>=w||ny>=h) continue;
+                const ni=idx(nx,ny);
+                if(!isBar(ni)){ x=nx; y=ny; s=ni; found=true; }
+              }
+            }
+          }
+          if(!found) return;
+        }
+        const rgb = hexToRGB(currentColor);
+        const seen = new Uint8Array(w*h);
+        const q=[{x:x,y:y}];
+        function cond(xx,yy){
+          if(xx<0||yy<0||xx>=w||yy>=h) return false;
+          const i=idx(xx,yy);
+          return !isBar(i) && !seen[yy*w+xx];
+        }
+        while(q.length){
+          const p=q.pop(); let xi=p.x; const py=p.y;
+          while(xi>=0 && cond(xi,py)) xi--; xi++;
+          let up=false,down=false;
+          while(xi<w && cond(xi,py)){
+            const di=idx(xi,py); seen[py*w+xi]=1;
+            if(erase){ pd[di]=pd[di+1]=pd[di+2]=0; pd[di+3]=0; }
+            else { pd[di]=rgb[0]; pd[di+1]=rgb[1]; pd[di+2]=rgb[2]; pd[di+3]=255; }
+            if(py>0){ if(cond(xi,py-1)&&!up){ q.push({x:xi,y:py-1}); up=true; } else if(!cond(xi,py-1)){ up=false; } }
+            if(py<h-1){ if(cond(xi,py+1)&&!down){ q.push({x:xi,y:py+1}); down=true; } else if(!cond(xi,py+1)){ down=false; } }
+            xi++;
+          }
+        }
+        pctx.putImageData(painted,0,0);
+        scheduleRender();
+      };
+    })();
+
+    // Export: asegura que captura el estado actual (incluye 🏮 y offsets)
+    (function(){
+      const btn=document.getElementById('download');
+      if(!btn) return;
+      btn.addEventListener('click', function(){
+        // Render en el siguiente frame y luego deja continuar con el flujo original
+        requestAnimationFrame(function(){
+          try{ render(); }catch(_){}
+        });
+      }, {passive:true});
+    })();
+    // ======== /MEJORA V6 ========
+})();
   </script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"23c74138fc1243dabdc3c1bec1e06b79","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 </html>
