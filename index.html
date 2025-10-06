@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" type="image/png" href="NUTRIMANDALAS.png">
-  <title>NUTRIMANDALAS — GENERATOR</title>
+  <title>NUTRIMANDALAS - GENERATOR</title>
   <style>
     :root{ --blue:#001aff; --row-h:52px; --pad:6px; --label-w:150px; }
 @media (max-width: 480px){ :root{ --label-w:110px; } .controls label{ font-size:12px; } }
@@ -48,7 +48,7 @@
     .swatch{width:20px;height:20px;border-radius:50%;border:2px solid var(--blue);background:var(--c);cursor:pointer}
     #info{white-space:normal;max-width:980px;margin-top:6px}
   
-/* ===== MOBILE FIXES ===== */
+
 body {
   overscroll-behavior: none;
   -webkit-user-select: none;
@@ -222,7 +222,7 @@ canvas { touch-action: auto; }
     const ringsEl=$('rings'), ringsVal=$('ringsVal');
     const styleEl=$('style');
 
-    // ===== i18n =====
+    
     let currentLang = 'en';
     const I18N = {
       en: {
@@ -328,7 +328,6 @@ canvas { touch-action: auto; }
       if(creditsOn){ creditsOverlay.innerHTML = L.creditsHTML; }
     }
 
-    // ===== Estado de mosaico y movimiento =====
     let mosaicVisible = true;
     let panMode = false;
     let draggingPan = false;
@@ -343,7 +342,6 @@ canvas { touch-action: auto; }
       updateCursor();
     }
 
-    // ===== Utils =====
     function mod(a,b){ return ((a % b) + b) % b; }
     function fitDrawImageScaled(ctx, img, w, h, scalePct){
       const s=Math.max(0.05, scalePct/100); const iw=img.width*s, ih=img.height*s; const cx=(w-iw)/2, cy=(h-ih)/2; ctx.drawImage(img,cx,cy,iw,ih);
@@ -352,7 +350,6 @@ canvas { touch-action: auto; }
     function convolveGray(src,w,h,k){ const out=new Float32Array(w*h); const ks=Math.sqrt(k.length)|0; const r=(ks-1)/2|0; const gray=(x,y)=>{ const xi=Math.min(w-1,Math.max(0,x)); const yi=Math.min(h-1,Math.max(0,y)); const i=(yi*w+xi)*4; return 0.2126*src[i]+0.7152*src[i+1]+0.0722*src[i+2]; }; for(let y=0;y<h;y++) for(let x=0;x<w;x++){ let acc=0,idx=0; for(let ky=-r;ky<=r;ky++) for(let kx=-r;kx<=r;kx++) acc+=gray(x+kx,y+ky)*k[idx++]; out[y*w+x]=acc; } return out; }
     function otsuThreshold(hist,total){ let sum=0; for(let i=0;i<256;i++) sum+=i*hist[i]; let sumB=0,wB=0,maxVar=0,thr=128; for(let t=0;t<256;t++){ wB+=hist[t]; if(wB===0) continue; const wF=total-wB; if(wF===0) break; sumB+=t*hist[t]; const mB=sumB/wB, mF=(sum-sumB)/wF; const between=wB*wF*(mB-mF)*(mB-mF); if(between>maxVar){ maxVar=between; thr=t; } } return thr; }
 
-    // ===== Carga de imagen =====
     function loadBitmap(file){ return new Promise(async (resolve,reject)=>{
       const fail=(e)=>reject(e instanceof Error?e:new Error(String(e)));
       try{
@@ -377,7 +374,6 @@ canvas { touch-action: auto; }
 
     function insideByThreshold(g, thr){ return (invertSel.value === 'inside') ? (g > thr) : !(g > thr); }
 
-    // ===== Máscara y borde =====
     function buildMask(){
       const w=canvas.width,h=canvas.height;
       const tmp=document.createElement('canvas'); tmp.width=w; tmp.height=h; const t=tmp.getContext('2d');
@@ -534,13 +530,11 @@ canvas { touch-action: auto; }
       ctxTarget.restore();
     }
 
-    // ===== Pintado principal =====
     function paintTo(ctxTarget,W,H){
       const tileSize=parseInt(tileEl.value,10);
       const tile=makeMandalaTile(tileSize);
       const pat=ctxTarget.createPattern(tile,'repeat');
 
-      // Fondo base (blanco) para composición; si está invertido se invierte al final al exportar y se simula con CSS
       ctxTarget.save();
       ctxTarget.fillStyle='#fff'; ctxTarget.fillRect(0,0,W,H);
       ctxTarget.restore();
@@ -550,7 +544,6 @@ canvas { touch-action: auto; }
         const g=document.createElement('canvas'); g.width=W; g.height=H; const gx=g.getContext('2d');
         gx.fillStyle='#fff'; gx.fillRect(0,0,W,H);
         if(mosaicVisible && pat) fillPatternWithOffset(gx, pat, W, H, tileSize);
-        // --- FIX: fondo blanco detrás de la guía (para evitar transparencias que bloqueen el Fill)
         (function(){
           var __ctx = gx;
           __ctx.save();
@@ -579,7 +572,6 @@ canvas { touch-action: auto; }
 
       ctxTarget.drawImage(border,0,0);
 
-      // Guide = patrón recortado + borde
       const g=document.createElement('canvas'); g.width=W; g.height=H; const gx=g.getContext('2d');
       gx.fillStyle='#fff'; gx.fillRect(0,0,W,H);
       if(mosaicVisible && pat){
@@ -588,7 +580,6 @@ canvas { touch-action: auto; }
         gx.drawImage(mask,0,0);
       }
       gx.drawImage(border,0,0);
-      // --- FIX: fondo blanco detrás de la guía (para evitar transparencias que bloqueen el Fill)
       (function(){
         var __ctx = gx;
         __ctx.save();
@@ -626,7 +617,6 @@ canvas { touch-action: auto; }
       applyBgModeVisual();
     }
 
-    // ===== Exportación =====
     function makePDFfromRGB(rgbBytes,w,h){
       const te = new TextEncoder();
       const chunks = []; let size = 0; const offsets=[0];
@@ -697,7 +687,6 @@ ${startxref}
       const fmt=formatEl.value;
       const mode = (typeof bgMode!=='undefined' && bgMode) ? bgMode.value : 'transparent';
 
-      // Pintamos lo que se ve (sin filtros CSS), y luego aplicamos la inversión en píxel si procede
       ox.imageSmoothingEnabled = true;
       ox.imageSmoothingQuality = 'high';
       if(mode==='white' || fmt==='jpeg' || fmt==='pdf'){
@@ -750,7 +739,6 @@ ${startxref}
       }
     });
 
-    // ===== Créditos =====
     let creditsOn=false;
     waveBtn.addEventListener('click',function(){
       creditsOn=!creditsOn;
@@ -759,17 +747,15 @@ ${startxref}
       if(creditsOn){ creditsOverlay.innerHTML = I18N[currentLang].creditsHTML; }
     });
 
-    // ===== Pintura =====
     let paintOn=false, paintLayer=null, pctx=null, currentColor='#ff9900', erase=false, tool='bucket', drawing=false;
     function ensurePaint(){ if(!paintLayer){ paintLayer=document.createElement('canvas'); paintLayer.width=canvas.width; paintLayer.height=canvas.height; pctx=paintLayer.getContext('2d'); } }
     function getClickXY(evt){ const r=canvas.getBoundingClientRect(); const x=(evt.clientX-r.left)*(canvas.width/r.width); const y=(evt.clientY-r.top)*(canvas.height/r.height); return {x:Math.floor(x),y:Math.floor(y)}; }
     function isBarrier(i,data){
   var a = data[i+3];
-  if (a < 8) return false; // transparente: no es barrera
+  if (a < 8) return false; 
   var r=data[i], g=data[i+1], b=data[i+2];
-  // Umbral por luminancia (más robusto que suma RGB)
   var y = 0.299*r + 0.587*g + 0.114*b;
-  return y < 90; // línea/borde oscura => barrera
+  return y < 90; 
 }
     function hexToRGB(hex){ const v=hex.replace('#',''); const n=parseInt(v,16); return [(n>>16)&255,(n>>8)&255,n&255]; }
     function updateCursor(){
@@ -785,7 +771,6 @@ ${startxref}
       const mxData= lastMask ? lastMask.getContext('2d').getImageData(0,0,w,h).data : null;
       const painted=pctx.getImageData(0,0,w,h); const pd=painted.data;
       const idx=(xx,yy)=>(yy*w+xx)*4; const s=idx(x,y);
-            // Si el clic cae sobre una línea, busca un píxel vecino válido como semilla
       if (isBarrier(s, g)){
         let found = false;
         for (let r=1; r<=2 && !found; r++){
@@ -824,17 +809,16 @@ ${startxref}
       pctx.putImageData(painted,0,0); render();
     }
 
-    // Eventos del canvas
+    
     canvas.addEventListener('click',function(e){
       if(panMode) return;
-      if(!paintOn){ // autoactivar pintar si se hace clic con Fill
+      if(!paintOn){ 
         if(tool==='bucket'){ paintOn=true; paintOverlay.classList.add('show'); paintToggle.setAttribute('aria-pressed','true'); ensurePaint(); }
         else return;
       }
       if(tool==='bucket'){ const pt=getClickXY(e); floodFill(pt.x,pt.y); }
     });
     canvas.addEventListener('pointerdown', function(e){
-  // Prevent page scroll when interacting
   if(e.pointerType === 'touch') e.preventDefault();
   if(panMode){
     draggingPan = true;
@@ -867,7 +851,6 @@ window.addEventListener('pointercancel', function(){
   if(drawing){ drawing=false; try{ pctx.closePath(); }catch(_){ } }
 });
 
-    // Flechas para mover mosaico en modo mano
     document.addEventListener('keydown', function(e){
       if(!panMode) return;
       const t = e.target;
@@ -881,7 +864,7 @@ window.addEventListener('pointercancel', function(){
       if(used){ e.preventDefault(); render(); }
     });
 
-    // ===== Botones de UI =====
+
     paintToggle.addEventListener('click',function(){
       paintOn=!paintOn;
       paintToggle.setAttribute('aria-pressed',paintOn?'true':'false');
@@ -929,24 +912,22 @@ window.addEventListener('pointercancel', function(){
       erase=!erase; tool= erase? 'brush':'bucket'; eraserBtn.setAttribute('aria-pressed', erase?'true':'false'); bucketBtn.setAttribute('aria-pressed', erase?'false':'true'); brushBtn.setAttribute('aria-pressed', erase?'true':'false'); document.querySelector('#paintOverlay .palette').style.display= erase? 'none':'flex'; updateCursor(); });
     clearPaintBtn.addEventListener('click',function(){ if(!paintLayer) return; const prev=canvas.style.cursor; canvas.style.cursor='wait'; setTimeout(function(){ canvas.style.cursor=prev; },250); pctx.clearRect(0,0,paintLayer.width,paintLayer.height); render(); });
 
-    // ===== Reset global =====
+    
     function resetAll(){
-      // Estado
+   
       mosaicVisible = true;
       setPanMode(false);
       draggingPan = false; panStart = null;
       tileOffsetX = 0; tileOffsetY = 0;
 
-      // Pintura
       paintOn = false; paintOverlay.classList.remove('show'); paintToggle.setAttribute('aria-pressed','false');
       paintLayer = null; pctx = null; currentColor='#ff9900'; erase=false; tool='bucket'; drawing=false;
       bucketBtn.setAttribute('aria-pressed','true'); brushBtn.setAttribute('aria-pressed','false'); eraserBtn.setAttribute('aria-pressed','false');
       document.querySelector('#paintOverlay .palette').style.display='flex';
 
-      // Máscara y guía
+
       lastMask=null; lastBorder=null; guideData=null;
 
-      // Selectores/controles a valores por defecto
       imgScaleEl.value=100; imgScaleVal.textContent='100%';
       tileEl.value=180; tileVal.textContent='180 px';
       borderWidthEl.value=6; borderWidthVal.textContent='6 px';
@@ -965,33 +946,29 @@ window.addEventListener('pointercancel', function(){
       bgMode.value='transparent';
       applyBgModeVisual();
 
-      // Botones
       mosaicToggle.setAttribute('aria-pressed','true');
       mosaicToggle.title = I18N[currentLang]['mosaicTitleOn'];
       panToggle.setAttribute('aria-pressed','false');
       waveBtn.setAttribute('aria-pressed','false'); creditsOn=false; creditsOverlay.classList.remove('show'); creditsOverlay.innerHTML='';
 
-      // Canvas
       ctx.setTransform(1,0,0,1,0,0);
       ctx.clearRect(0,0,canvas.width,canvas.height);
 
       render();
     }
 
-    // ===== Eventos de UI generales =====
     fileBtn.addEventListener('click',function(){ fileInput.click(); });
     fileInput.addEventListener('change',function(){
       const f=fileInput.files&&fileInput.files[0];
-      resetAll(); // restaurar TODO al cambiar de imagen
+      resetAll(); 
       fileName.textContent=f ? f.name : I18N[currentLang].none;
       if(f) (async()=>{ try{ infoDiv.textContent=(currentLang==='es'?'Procesando imagen…':'Processing image…'); imgEl=await loadBitmap(f); render(); infoDiv.textContent=''; }catch(e){ showErr((currentLang==='es'?'No se pudo cargar la imagen':'Could not load image'),e); } })();
     });
 
-    // Language toggle buttons
+    
     $('langEs').addEventListener('click', function(){ setLang('es'); });
     $('langEn').addEventListener('click', function(){ setLang('en'); });
 
-    // Sincronizar etiquetas y re-render
     [blurEl,edgeThrEl,dilateEl,borderWidthEl,methodEl,thrFixedEl,invertSel,imgScaleEl,tileEl,strokeEl,spokesEl,ringsEl,styleEl,bgMode]
       .forEach(function(el){ el.addEventListener('input',function(){
         if(blurVal) blurVal.textContent=blurEl.value+' px';
@@ -1010,14 +987,12 @@ window.addEventListener('pointercancel', function(){
     function showErr(msg,e){ console.error(msg,e||''); infoDiv.textContent='⚠️ '+msg+(e?(' — '+(e.message||e)):''); }
 
     function applyInitial(){
-      setLang('en'); // iniciar en inglés, como pediste
+      setLang('en'); 
       render();
     }
 
-    // Inicial
     applyInitial();
   
-    // ======== MEJORA V6: Flood-Fusion + 🏮 con pan libre + export igual a vista ========
     let lanternOn = false;
     const lanternBtn = document.getElementById('lanternToggle');
     let __rafPending = false;
@@ -1035,7 +1010,6 @@ window.addEventListener('pointercancel', function(){
       });
     }
 
-    // SHIFT + arrastrar siempre mueve el mosaico/mandala sin tener que activar la mano
     (function(){
       let draggingShift = false;
       let start = null;
@@ -1062,7 +1036,6 @@ window.addEventListener('pointercancel', function(){
       stage.addEventListener('lostpointercapture', stop);
     })();
 
-    // Overwrite the pattern filler: when 🏮, draw a single tile centered but offset by tileOffsetX/Y
     (function(){
       const __orig = (typeof fillPatternWithOffset==='function') ? fillPatternWithOffset : null;
       if(!__orig) return;
@@ -1098,7 +1071,6 @@ window.addEventListener('pointercancel', function(){
       };
     })();
 
-    // Flood-Fusion: barrera = unión de guía + canvas visible (mosaico incluido)
     (function(){
       const _oldFlood = floodFill;
       floodFill = function(x,y){
@@ -1160,18 +1132,16 @@ window.addEventListener('pointercancel', function(){
       };
     })();
 
-    // Export: asegura que captura el estado actual (incluye 🏮 y offsets)
     (function(){
       const btn=document.getElementById('download');
       if(!btn) return;
       btn.addEventListener('click', function(){
-        // Render en el siguiente frame y luego deja continuar con el flujo original
         requestAnimationFrame(function(){
           try{ render(); }catch(_){}
         });
       }, {passive:true});
     })();
-    // ======== /MEJORA V6 ========
+    
 })();
   </script>
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"23c74138fc1243dabdc3c1bec1e06b79","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
