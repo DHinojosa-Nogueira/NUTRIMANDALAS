@@ -1335,7 +1335,7 @@ window.addEventListener('pointercancel', function(){
           }
           if(screen && screen[i+3]>7){
             const y1 = 0.299*screen[i] + 0.587*screen[i+1] + 0.114*screen[i+2];
-            if (y1 < 150) return true;
+            if (y1 < 1) return true;
           }
           return false;
         }
