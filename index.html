@@ -939,28 +939,58 @@ ${startxref}
       }
 
       if(fmt==='png'){
-        const url=off.toDataURL('image/png');
-        const a=document.createElement('a'); a.download='nutrimandala.png'; a.href=url;        
+        // Use Blob + object URL so mobile browsers trigger a real download
+        if (off.toBlob){
+          off.toBlob(function(blob){
+            const a=document.createElement('a');
+            const url=URL.createObjectURL(blob);
+            a.download='nutrimandala.png';
+            a.href=url;
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(()=>{ URL.revokeObjectURL(url); a.remove(); },2000);
+          }, 'image/png');
+        } else {
+          // Fallback for very old browsers
+          const url=off.toDataURL('image/png');
+          const a=document.createElement('a');
+          a.download='nutrimandala.png';
+          a.href=url;
+          document.body.appendChild(a);
           a.click();
+          setTimeout(()=>{ a.remove(); },2000);
         }
       } else if(fmt==='jpeg'){
-        const url=off.toDataURL('image/jpeg',0.98);
-        const a=document.createElement('a'); a.download='nutrimandala.jpg'; a.href=url;
+        // Use Blob + object URL so mobile browsers trigger a real download
+        if (off.toBlob){
+          off.toBlob(function(blob){
+            const a=document.createElement('a');
+            const url=URL.createObjectURL(blob);
+            a.download='nutrimandala.jpg';
+            a.href=url;
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(()=>{ URL.revokeObjectURL(url); a.remove(); },2000);
+          }, 'image/jpeg', 0.98);
+        } else {
+          // Fallback for very old browsers
+          const url=off.toDataURL('image/jpeg',0.98);
+          const a=document.createElement('a');
+          a.download='nutrimandala.jpg';
+          a.href=url;
+          document.body.appendChild(a);
           a.click();
+          setTimeout(()=>{ a.remove(); },2000);
         }
       } else if(fmt==='pdf'){
         const imgData = ox.getImageData(0,0,W,H).data;
         const rgb = new Uint8Array(W*H*3);
         for(let i=0,j=0;i<imgData.length;i+=4){ rgb[j++]=imgData[i]; rgb[j++]=imgData[i+1]; rgb[j++]=imgData[i+2]; }
         const blob=makePDFfromRGB(rgb,W,H);
-        const a=document.createElement('a'); a.download='nutrimandala.pdf'; const url=URL.createObjectURL(blob); a.href=url; 
-          a.click();
-        } setTimeout(()=>URL.revokeObjectURL(url),2000);
+        const a=document.createElement('a'); a.download='nutrimandala.pdf'; const url=URL.createObjectURL(blob); a.href=url; document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(url); a.remove(); },2000);
       } else if(fmt==='tiff'){
         const blob=makeTIFFfromCanvas(off);
-        const a=document.createElement('a'); a.download='nutrimandala.tif'; const url=URL.createObjectURL(blob); a.href=url; 
-          a.click();
-        } setTimeout(()=>URL.revokeObjectURL(url),2000);
+        const a=document.createElement('a'); a.download='nutrimandala.tif'; const url=URL.createObjectURL(blob); a.href=url; document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(url); a.remove(); },2000);
       }
     });
 
