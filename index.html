@@ -940,16 +940,12 @@ ${startxref}
 
       if(fmt==='png'){
         const url=off.toDataURL('image/png');
-        const a=document.createElement('a'); a.download='nutrimandala.png'; a.href=url; if(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)){
-          window.open(a.href, '_blank');
-        } else {
+        const a=document.createElement('a'); a.download='nutrimandala.png'; a.href=url;        
           a.click();
         }
       } else if(fmt==='jpeg'){
         const url=off.toDataURL('image/jpeg',0.98);
-        const a=document.createElement('a'); a.download='nutrimandala.jpg'; a.href=url; if(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)){
-          window.open(a.href, '_blank');
-        } else {
+        const a=document.createElement('a'); a.download='nutrimandala.jpg'; a.href=url;
           a.click();
         }
       } else if(fmt==='pdf'){
@@ -957,16 +953,12 @@ ${startxref}
         const rgb = new Uint8Array(W*H*3);
         for(let i=0,j=0;i<imgData.length;i+=4){ rgb[j++]=imgData[i]; rgb[j++]=imgData[i+1]; rgb[j++]=imgData[i+2]; }
         const blob=makePDFfromRGB(rgb,W,H);
-        const a=document.createElement('a'); a.download='nutrimandala.pdf'; const url=URL.createObjectURL(blob); a.href=url; if(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)){
-          window.open(a.href, '_blank');
-        } else {
+        const a=document.createElement('a'); a.download='nutrimandala.pdf'; const url=URL.createObjectURL(blob); a.href=url; 
           a.click();
         } setTimeout(()=>URL.revokeObjectURL(url),2000);
       } else if(fmt==='tiff'){
         const blob=makeTIFFfromCanvas(off);
-        const a=document.createElement('a'); a.download='nutrimandala.tif'; const url=URL.createObjectURL(blob); a.href=url; if(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)){
-          window.open(a.href, '_blank');
-        } else {
+        const a=document.createElement('a'); a.download='nutrimandala.tif'; const url=URL.createObjectURL(blob); a.href=url; 
           a.click();
         } setTimeout(()=>URL.revokeObjectURL(url),2000);
       }
