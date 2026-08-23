@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light" />
   <link rel="icon" type="image/png" href="NUTRIMANDALAS.png">
   <title>NUTRIMANDALAS - GENERATOR</title>
   <style>
@@ -68,7 +69,7 @@ canvas {
 }
 
 
-canvas { touch-action: auto; }
+#c, #customCanvas { touch-action: none; }
 .touch-block { touch-action: none; }
 </style>
 
@@ -258,13 +259,26 @@ canvas { touch-action: auto; }
 }
 
 </style>
+
+<style>
+/* Mobile/performance refinements: preserve layout and visual language. */
+html{ -webkit-text-size-adjust:100%; text-size-adjust:100%; }
+.topbar{ scrollbar-width:none; }
+button, select, input[type="color"], input[type="range"]{ touch-action:manipulation; }
+@media (hover:none){ button:hover{ opacity:1; filter:none; } }
+@media (pointer:coarse) and (max-width:640px){
+  .topbar button, button{ min-height:44px; }
+  select, .controls input[type="text"], .controls input[type="number"], .controls input[type="color"]{ min-height:40px; }
+  .controls input[type="range"]{ min-height:36px; }
+}
+</style>
 </head>
 <body>
 
   <div class="brand">
-    <img class="logo" src="NUTRIMANDALAS.png" alt="NUTRIMANDALAS logo (left)">
+    <img class="logo" src="NUTRIMANDALAS.png" alt="NUTRIMANDALAS logo (left)" decoding="async">
     <h1>NUTRIMANDALAS - GENERATOR</h1>
-    <img class="logo" src="ibima.png" alt="IBIMA Plataforma BIONAND logo (right)">
+    <img class="logo" src="ibima.png" alt="IBIMA Plataforma BIONAND logo (right)" decoding="async">
   </div>
 
   <div class="topbar">
@@ -459,11 +473,14 @@ canvas { touch-action: auto; }
         panOn:'Moving (hand)', panOff:'Static',
         alertLoad:'Load an image and generate the mandala first.',
         creditsHTML: `<div>
-  <div><strong><u>NUTRIMANDALAS — GENERATOR</u></strong></div>
-  <p>This tool was created within the <strong>“NUTRIMANDALA” Project</strong>, focused on fighting anxiety and its relationship with dietary habits and obesity.</p>
-  <p><strong>Principal Investigators</strong><br> </p>
-  <p><strong>Team Members</strong><br> </p>
-  <p><strong>Affiliations</strong><br> </p>
+  <div><strong><p><u>NUTRIMANDALAS — GENERATOR</u></strong></div><p>
+  <p>This tool was created within the <strong>“NUTRIMANDALAS” Project</strong>, focused on fighting anxiety and its relationship with dietary habits and obesity. In addition, a printed version in PDF has been developed.<p> 
+<p><a href="https://zenodo.org/records/17203850" target="_blank" rel="noopener external">doi: 10.5281/zenodo.17203850</a></p>
+  <p><strong>Principal Investigators</strong><br>Daniel Hinojosa-Nogueira and Isabel Moreno-Indias</p>
+  <p><strong>Team Members</strong><br>Cristina Mª Díaz-Perdigones, Alba Subiri-Verdugo, María José García-López, Alba Rodríguez-Muñoz, Francisco J. Tinahones</p>
+  <p><strong>Affiliations</strong><br>IBIMA Plataforma BIONAND<br>Clinical Management Unit of Endocrinology and Nutrition<br>Virgen de la Victoria University Hospital<br>Málaga, Spain.</p>
+  <p><strong>Reference</strong><br>Hinojosa-Nogueira, D., Díaz-Perdigones, C. M., Subiri-Verdugo, A., García-López, M. J., Rodríguez-Muñoz, A., Tinahones, F. J., & Moreno-Indias, I. (2026). Nutrimandalas Project: A conceptual and methodological proposal for mandala-based art therapy tools to help control anxiety and eating behaviour management. Advances in Integrative Medicine, 100697.</p>
+</p><a href="https://www.sciencedirect.com/science/article/pii/S221295882600090X" target="_blank" rel="noopener external">doi: 10.1016/j.aimed.2026.100697</a></p>
   <p style="margin-top:8px">
     <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener license"><strong>NUTRIMANDALAS</strong> © 2025 — CC BY-NC 4.0</a>
     <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="CC" style="max-width:1em;max-height:1em;margin-left:.2em;">
@@ -485,11 +502,14 @@ canvas { touch-action: auto; }
         panOn:'Mover mosaico (mano)', panOff:'Mover mosaico',
         alertLoad:'Primero carga una imagen y genera el mandala.',
         creditsHTML: `<div>
-  <div><strong><u>NUTRIMANDALAS - GENERATOR</u></strong></div>
-  <p>Esta herramienta se creó en el marco del<strong> “Proyecto NUTRIMANDALA”</strong>, centrado en combatir la ansiedad y su relación con los hábitos alimentarios y la obesidad.</p>
-  <p><strong>Investigadores principales</strong><br> </p>
-  <p><strong>Miembros del equipo</strong><br> </p>
-  <p><strong>Afiliaciones</strong><br> </p>
+  <div><strong><p><u>NUTRIMANDALAS — GENERATOR</u></strong></div><p>
+  <p>Esta herramienta se creó en el marco del<strong> “Proyecto NUTRIMANDALAS”</strong>, centrado en combatir la ansiedad y su relación con los hábitos alimentarios y la obesidad. Además, se ha desarrollado una versión impresa en PDF.</p> 
+</p><a href="https://zenodo.org/records/17203850" target="_blank" rel="noopener external">doi: 10.5281/zenodo.17203850</a></p>
+  <p><strong>Investigadores principales</strong><br>Daniel Hinojosa-Nogueira e Isabel Moreno-Indias</p>
+  <p><strong>Miembros del equipo</strong><br>Cristina Mª Díaz-Perdigones, Alba Subiri-Verdugo, María José García-López, Alba Rodríguez-Muñoz, Francisco J. Tinahones</p>
+  <p><strong>Afiliaciones</strong><br>IBIMA Plataforma BIONAND<br>Unidad de Gestión Clínica de Endocrinología y Nutrición<br>Hospital Universitario Virgen de la Victoria<br>Málaga, España.</p>
+  <p><strong>Referencia</strong><br>Hinojosa-Nogueira, D., Díaz-Perdigones, C. M., Subiri-Verdugo, A., García-López, M. J., Rodríguez-Muñoz, A., Tinahones, F. J., & Moreno-Indias, I. (2026). Nutrimandalas Project: A conceptual and methodological proposal for mandala-based art therapy tools to help control anxiety and eating behaviour management. Advances in Integrative Medicine, 100697.</p> 
+</p><a href="https://www.sciencedirect.com/science/article/pii/S221295882600090X" target="_blank" rel="noopener external">doi: 10.1016/j.aimed.2026.100697</a></p>
   <p style="margin-top:8px">
     <a href="https://creativecommons.org/licenses/by-nc/4.0/deed.es" target="_blank" rel="noopener license"><strong>NUTRIMANDALAS</strong> © 2025 — CC BY-NC 4.0</a>
     <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="CC" style="max-width:1em;max-height:1em;margin-left:.2em;">
@@ -550,10 +570,63 @@ canvas { touch-action: auto; }
     }
 
     let mosaicVisible = true;
+    let lanternOn = false;
     let panMode = false;
     let draggingPan = false;
     let panStart = null;
     let tileOffsetX = 0, tileOffsetY = 0;
+
+    function getLanternMaskAlpha(){
+      if(!lastMask) return null;
+      if(__lanternMaskRef===lastMask && __lanternMaskAlpha) return __lanternMaskAlpha;
+      try{
+        __lanternMaskAlpha=lastMask.getContext('2d',{willReadFrequently:true}).getImageData(0,0,lastMask.width,lastMask.height).data;
+        __lanternMaskRef=lastMask;
+        return __lanternMaskAlpha;
+      }catch(_){
+        __lanternMaskRef=null; __lanternMaskAlpha=null;
+        return null;
+      }
+    }
+
+    function lanternPlacementVisible(ox,oy){
+      if(!lanternOn) return true;
+      const W=canvas.width,H=canvas.height;
+      const tileSize=Math.max(1,parseInt(tileEl.value,10)||180);
+      const left=W/2-tileSize/2+ox, top=H/2-tileSize/2+oy;
+      const right=left+tileSize, bottom=top+tileSize;
+      const ix0=Math.max(0,left), iy0=Math.max(0,top), ix1=Math.min(W,right), iy1=Math.min(H,bottom);
+      if(ix1<=ix0 || iy1<=iy0) return false;
+
+      // Keep a useful portion visible even when there is no image mask.
+      if(!imgEl || !lastMask){
+        return ((ix1-ix0)*(iy1-iy0)) >= tileSize*tileSize*0.12;
+      }
+
+      // If there is a mask, reject a drag position that would clip the
+      // single motif almost completely. The visible side follows Mask mode.
+      const a=getLanternMaskAlpha();
+      if(!a) return true;
+      const mw=lastMask.width,mh=lastMask.height;
+      const samples=12; let allowed=0,total=0;
+      for(let sy=0;sy<samples;sy++){
+        const y=Math.max(0,Math.min(mh-1,Math.floor(iy0+(iy1-iy0)*(sy+0.5)/samples)));
+        for(let sx=0;sx<samples;sx++){
+          const x=Math.max(0,Math.min(mw-1,Math.floor(ix0+(ix1-ix0)*(sx+0.5)/samples)));
+          const alpha=a[(y*mw+x)*4+3];
+          const visible=(invertSel.value==='outside') ? alpha<128 : alpha>=128;
+          if(visible) allowed++;
+          total++;
+        }
+      }
+      return total>0 && (allowed/total)>=0.06;
+    }
+
+    function setPanOffsets(ox,oy){
+      if(lanternOn && !lanternPlacementVisible(ox,oy)) return false;
+      tileOffsetX=ox; tileOffsetY=oy;
+      return true;
+    }
 
     function setPanMode(on){
       panMode = !!on;
@@ -568,18 +641,56 @@ canvas { touch-action: auto; }
       const s=Math.max(0.05, scalePct/100); const iw=img.width*s, ih=img.height*s; const cx=(w-iw)/2, cy=(h-ih)/2; ctx.drawImage(img,cx,cy,iw,ih);
     }
     function gaussianKernel(size,sigma){ const r=(size-1)/2; const k=[]; let sum=0; for(let y=-r;y<=r;y++) for(let x=-r;x<=r;x++){ const v=Math.exp(-(x*x+y*y)/(2*sigma*sigma)); k.push(v); sum+=v; } return k.map(v=>v/sum); }
-    function convolveGray(src,w,h,k){ const out=new Float32Array(w*h); const ks=Math.sqrt(k.length)|0; const r=(ks-1)/2|0; const gray=(x,y)=>{ const xi=Math.min(w-1,Math.max(0,x)); const yi=Math.min(h-1,Math.max(0,y)); const i=(yi*w+xi)*4; return 0.2126*src[i]+0.7152*src[i+1]+0.0722*src[i+2]; }; for(let y=0;y<h;y++) for(let x=0;x<w;x++){ let acc=0,idx=0; for(let ky=-r;ky<=r;ky++) for(let kx=-r;kx<=r;kx++) acc+=gray(x+kx,y+ky)*k[idx++]; out[y*w+x]=acc; } return out; }
+    function convolveGray(src,w,h,k){
+      const n=w*h;
+      const gray=new Float32Array(n);
+      for(let i=0,j=0;i<n;i++,j+=4){
+        gray[i]=0.2126*src[j]+0.7152*src[j+1]+0.0722*src[j+2];
+      }
+      const ks=Math.sqrt(k.length)|0;
+      if(ks<=1) return gray;
+      const r=(ks-1)>>1;
+      const k1=new Float32Array(ks);
+      let sum=0;
+      const row=r*ks;
+      for(let i=0;i<ks;i++){ k1[i]=k[row+i]; sum+=k1[i]; }
+      if(sum>0){ for(let i=0;i<ks;i++) k1[i]/=sum; }
+      const tmp=new Float32Array(n);
+      const out=new Float32Array(n);
+      for(let y=0;y<h;y++){
+        const base=y*w;
+        for(let x=0;x<w;x++){
+          let acc=0;
+          for(let dx=-r;dx<=r;dx++){
+            const xx=Math.min(w-1,Math.max(0,x+dx));
+            acc+=gray[base+xx]*k1[dx+r];
+          }
+          tmp[base+x]=acc;
+        }
+      }
+      for(let y=0;y<h;y++){
+        const base=y*w;
+        for(let x=0;x<w;x++){
+          let acc=0;
+          for(let dy=-r;dy<=r;dy++){
+            const yy=Math.min(h-1,Math.max(0,y+dy));
+            acc+=tmp[yy*w+x]*k1[dy+r];
+          }
+          out[base+x]=acc;
+        }
+      }
+      return out;
+    }
     function otsuThreshold(hist,total){ let sum=0; for(let i=0;i<256;i++) sum+=i*hist[i]; let sumB=0,wB=0,maxVar=0,thr=128; for(let t=0;t<256;t++){ wB+=hist[t]; if(wB===0) continue; const wF=total-wB; if(wF===0) break; sumB+=t*hist[t]; const mB=sumB/wB, mF=(sum-sumB)/wF; const between=wB*wF*(mB-mF)*(mB-mF); if(between>maxVar){ maxVar=between; thr=t; } } return thr; }
 
     function loadBitmap(file){ return new Promise(async (resolve,reject)=>{
       const fail=(e)=>reject(e instanceof Error?e:new Error(String(e)));
       try{
         if('createImageBitmap' in window){
+          // ImageBitmap can be drawn directly. Avoiding canvas -> dataURL -> Image
+          // removes a large base64 copy and reduces peak memory on phones.
           const bmp=await createImageBitmap(file);
-          const c=document.createElement('canvas'); c.width=bmp.width; c.height=bmp.height;
-          c.getContext('2d').drawImage(bmp,0,0);
-          const img=new Image();
-          img.onload=()=>resolve(img); img.onerror=(e)=>fail(e); img.src=c.toDataURL('image/png'); return;
+          resolve(bmp); return;
         }
       }catch(e){ console.warn('createImageBitmap failed',e); }
       try{
@@ -592,12 +703,87 @@ canvas { touch-action: auto; }
     }); }
 
     let imgEl=null, lastMask=null, lastBorder=null, guideData=null;
+    let imgSerial=0;
+    let __maskCache=null;
+    let __tileCache={key:'', canvas:null};
+    let __baseCanvas=null, __baseCtx=null, __guideCacheKey='';
+    let __lanternMaskRef=null, __lanternMaskAlpha=null;
+
+    function resetPerfCaches(which){
+      if(!which || which==='all' || which==='mask'){ __maskCache=null; __lanternMaskRef=null; __lanternMaskAlpha=null; }
+      if(!which || which==='all' || which==='tile') __tileCache={key:'', canvas:null};
+      if(!which || which==='all' || which==='guide'){ guideData=null; __guideCacheKey=''; }
+    }
+
+    function makeMaskCacheKey(){
+      return [
+        imgSerial,
+        imgEl ? imgEl.width : 0,
+        imgEl ? imgEl.height : 0,
+        canvas.width, canvas.height,
+        imgScaleEl.value, blurEl.value, edgeThrEl.value, dilateEl.value,
+        borderWidthEl.value, methodEl.value, thrFixedEl.value, invertSel.value
+      ].join('|');
+    }
+
+    function squareDilateBinary(src,w,h,R){
+      if(R<=0) return new Uint8ClampedArray(src);
+      const tmp=new Uint8ClampedArray(w*h);
+      const out=new Uint8ClampedArray(w*h);
+      for(let y=0;y<h;y++){
+        const row=y*w;
+        let count=0;
+        const xEnd=Math.min(w-1,R);
+        for(let xx=0;xx<=xEnd;xx++){ if(src[row+xx]) count++; }
+        for(let x=0;x<w;x++){
+          tmp[row+x]=count>0?255:0;
+          const left=x-R;
+          const right=x+R+1;
+          if(left>=0 && src[row+left]) count--;
+          if(right<w && src[row+right]) count++;
+        }
+      }
+      for(let x=0;x<w;x++){
+        let count=0;
+        const yEnd=Math.min(h-1,R);
+        for(let yy=0;yy<=yEnd;yy++){ if(tmp[yy*w+x]) count++; }
+        for(let y=0;y<h;y++){
+          out[y*w+x]=count>0?255:0;
+          const top=y-R;
+          const bottom=y+R+1;
+          if(top>=0 && tmp[top*w+x]) count--;
+          if(bottom<h && tmp[bottom*w+x]) count++;
+        }
+      }
+      return out;
+    }
+
+    function getBaseContext(W,H){
+      if(!__baseCanvas){ __baseCanvas=document.createElement('canvas'); __baseCtx=__baseCanvas.getContext('2d',{willReadFrequently:true}); }
+      if(__baseCanvas.width!==W || __baseCanvas.height!==H){ __baseCanvas.width=W; __baseCanvas.height=H; }
+      __baseCtx.setTransform(1,0,0,1,0,0);
+      __baseCtx.globalCompositeOperation='source-over';
+      __baseCtx.clearRect(0,0,W,H);
+      return __baseCtx;
+    }
+
+    function updateGuideData(gx,W,H){
+      if(panMode || draggingPan || drawing){ guideData=null; return; }
+      guideData=gx.getImageData(0,0,W,H);
+    }
 
     function insideByThreshold(g, thr){ return (invertSel.value === 'inside') ? (g > thr) : !(g > thr); }
 
     function buildMask(){
       const w=canvas.width,h=canvas.height;
-      const tmp=document.createElement('canvas'); tmp.width=w; tmp.height=h; const t=tmp.getContext('2d');
+      const key=makeMaskCacheKey();
+      if(__maskCache && __maskCache.key===key){
+        lastMask=__maskCache.mask;
+        lastBorder=__maskCache.border;
+        return __maskCache;
+      }
+
+      const tmp=document.createElement('canvas'); tmp.width=w; tmp.height=h; const t=tmp.getContext('2d',{willReadFrequently:true});
       t.clearRect(0,0,w,h);
       if(imgEl) fitDrawImageScaled(t,imgEl,w,h,parseInt(imgScaleEl.value,10));
       const src=t.getImageData(0,0,w,h), s=src.data;
@@ -615,94 +801,78 @@ canvas { touch-action: auto; }
       const edgeThr=parseInt(edgeThrEl.value,10);
       const ed=new Uint8ClampedArray(w*h);
       const gAt=(x,y)=> gray[Math.min(h-1,Math.max(0,y))*w + Math.min(w-1,Math.max(0,x))];
-      for(let y=1;y<h-1;y++) for(let x=1;x<w-1;x++){
-        const gx=-gAt(x-1,y-1)-2*gAt(x-1,y)-gAt(x-1,y+1)+gAt(x+1,y-1)+2*gAt(x+1,y)+gAt(x+1,y+1);
-        const gy=-gAt(x-1,y-1)-2*gAt(x,y-1)-gAt(x+1,y-1)+gAt(x-1,y+1)+2*gAt(x,y+1)+gAt(x+1,y+1);
-        ed[y*w+x]=Math.hypot(gx,gy)>edgeThr?255:0;
+      for(let y=1;y<h-1;y++){
+        const row=y*w;
+        for(let x=1;x<w-1;x++){
+          const gx=-gray[(y-1)*w+x-1]-2*gray[y*w+x-1]-gray[(y+1)*w+x-1]+gray[(y-1)*w+x+1]+2*gray[y*w+x+1]+gray[(y+1)*w+x+1];
+          const gy=-gray[(y-1)*w+x-1]-2*gray[(y-1)*w+x]-gray[(y-1)*w+x+1]+gray[(y+1)*w+x-1]+2*gray[(y+1)*w+x]+gray[(y+1)*w+x+1];
+          ed[row+x]=(gx*gx+gy*gy)>(edgeThr*edgeThr)?255:0;
+        }
       }
 
       const R=parseInt(dilateEl.value,10);
-      const dil=new Uint8ClampedArray(w*h);
-      for(let y=0;y<h;y++) for(let x=0;x<w;x++){
-        let hit=false;
-        for(let yy=y-R;yy<=y+R && !hit;yy++){
-          if(yy<0||yy>=h) continue;
-          for(let xx=x-R;xx<=x+R;xx++){
-            if(xx<0||xx>=w) continue;
-            if(ed[yy*w+xx]){ hit=true; break; }
-          }
-        }
-        dil[y*w+x]=hit?255:0;
-      }
+      const dil=squareDilateBinary(ed,w,h,R);
 
-      const mask=document.createElement('canvas'); mask.width=w; mask.height=h; const mx=mask.getContext('2d');
+      const mask=document.createElement('canvas'); mask.width=w; mask.height=h; const mx=mask.getContext('2d',{willReadFrequently:true});
       const out=mx.createImageData(w,h); const o=out.data;
       const method=methodEl.value;
+      const total=w*h;
 
       if(method==='fixed'){
         const thr=parseInt(thrFixedEl.value,10);
-        for(let y=0;y<h;y++) for(let x=0;x<w;x++){
-          const g=gAt(x,y);
-          const inside=insideByThreshold(g,thr);
-          const i=(y*w+x)*4; o[i+3]=inside?255:0;
+        for(let i=0;i<total;i++){
+          const inside=insideByThreshold(gray[i],thr);
+          o[i*4+3]=inside?255:0;
         }
       } else {
-        const outside=new Uint8Array(w*h), q=[];
-        const push=(i)=>q.push(i);
-        for(let x=0;x<w;x++){
-          if(dil[x]===0){ outside[x]=1; push(x); }
-          if(dil[(h-1)*w+x]===0){ outside[(h-1)*w+x]=1; push((h-1)*w+x); }
+        const outside=new Uint8Array(total);
+        const q=new Int32Array(total);
+        let head=0,tail=0;
+        const add=(i)=>{ if(!outside[i] && dil[i]===0){ outside[i]=1; q[tail++]=i; } };
+        for(let x=0;x<w;x++){ add(x); add((h-1)*w+x); }
+        for(let y=0;y<h;y++){ add(y*w); add(y*w+w-1); }
+        while(head<tail){
+          const i=q[head++];
+          const x=i%w;
+          if(x>0) add(i-1);
+          if(x<w-1) add(i+1);
+          if(i>=w) add(i-w);
+          if(i<total-w) add(i+w);
         }
-        for(let y=0;y<h;y++){
-          if(dil[y*w]===0){ outside[y*w]=1; push(y*w); }
-          if(dil[y*w+w-1]===0){ outside[y*w+w-1]=1; push(y*w+w-1); }
-        }
-        while(q.length){
-          const i=q.shift();
-          const n=[i-1,i+1,i-w,i+w];
-          for(const ni of n){
-            if(ni<0||ni>=w*h) continue;
-            if(outside[ni]) continue;
-            if(dil[ni]===0){ outside[ni]=1; q.push(ni); }
-          }
-        }
-        for(let i=0;i<w*h;i++){
-          const a=(!outside[i] && dil[i]===0)?255:0;
-          o[i*4+3]=a;
+        for(let i=0;i<total;i++){
+          o[i*4+3]=(!outside[i] && dil[i]===0)?255:0;
         }
 
-        let count=0; for(let i=0;i<w*h;i++) if(o[i*4+3]) count++;
-        if(method==='auto' && count<(w*h*0.002)){
-          const hist=new Uint32Array(256); let total=0;
-          for(let y=0;y<h;y++) for(let x=0;x<w;x++){ const g=gAt(x,y)|0; hist[g]++; total++; }
-          let thr=otsuThreshold(hist,total);
-          for(let y=0;y<h;y++) for(let x=0;x<w;x++){
-            const gg=gAt(x,y);
-            const inside=insideByThreshold(gg,thr);
-            const i=(y*w+x)*4; o[i+3]=inside?255:0;
+        let count=0; for(let i=0;i<total;i++) if(o[i*4+3]) count++;
+        if(method==='auto' && count<(total*0.002)){
+          const hist=new Uint32Array(256);
+          for(let i=0;i<total;i++){ hist[Math.max(0,Math.min(255,gray[i]|0))]++; }
+          const thr=otsuThreshold(hist,total);
+          for(let i=0;i<total;i++){
+            const inside=insideByThreshold(gray[i],thr);
+            o[i*4+3]=inside?255:0;
           }
         }
       }
 
       mx.putImageData(out,0,0);
 
-      const border=document.createElement('canvas'); border.width=w; border.height=h; const bx=border.getContext('2d');
-      const mid=mx.getImageData(0,0,w,h).data; const bd=bx.createImageData(w,h); const b=bd.data; const BW=parseInt(borderWidthEl.value,10);
-      for(let y=0;y<h;y++) for(let x=0;x<w;x++){
-        const i=(y*w+x)*4; if(mid[i+3]===0) continue; let near=false;
-        for(let yy=y-BW;yy<=y+BW && !near;yy++){
-          if(yy<0||yy>=h) continue;
-          for(let xx=x-BW;xx<=x+BW;xx++){
-            if(xx<0||xx>=w) continue;
-            if(mid[(yy*w+xx)*4+3]===0){ near=true; break; }
-          }
+      const border=document.createElement('canvas'); border.width=w; border.height=h; const bx=border.getContext('2d',{willReadFrequently:true});
+      const bd=bx.createImageData(w,h); const b=bd.data; const BW=parseInt(borderWidthEl.value,10);
+      const outsideAlpha=new Uint8ClampedArray(total);
+      for(let i=0;i<total;i++){ if(o[i*4+3]===0) outsideAlpha[i]=255; }
+      const nearOutside=squareDilateBinary(outsideAlpha,w,h,BW);
+      for(let i=0;i<total;i++){
+        if(o[i*4+3]!==0 && nearOutside[i]){
+          const j=i*4; b[j]=b[j+1]=b[j+2]=0; b[j+3]=255;
         }
-        if(near){ b[i]=b[i+1]=b[i+2]=0; b[i+3]=255; }
       }
       bx.putImageData(bd,0,0);
 
+      const result={key,mask,border};
+      __maskCache=result;
       lastMask=mask; lastBorder=border;
-      return {mask,border};
+      return result;
     }
 
     function makeMandalaTile(size){
@@ -752,79 +922,84 @@ canvas { touch-action: auto; }
     }
 
     function getCurrentTileCanvas(tileSize){
-      if(window.__useCustomTile && window.__customTile){
+      const usingCustom=!!(window.__useCustomTile && window.__customTile);
+      const key=usingCustom
+        ? ['custom',tileSize,window.__customTileVersion||0,window.__customBgColor||''].join('|')
+        : ['auto',tileSize,spokesEl.value,ringsEl.value,strokeEl.value,styleEl.value].join('|');
+      if(__tileCache && __tileCache.key===key && __tileCache.canvas) return __tileCache.canvas;
+
+      let tile;
+      if(usingCustom){
         const src = window.__customTile;
-        if(src.width === tileSize && src.height === tileSize) return src;
-        const t=document.createElement('canvas'); t.width=t.height=tileSize; const x=t.getContext('2d');
-        x.imageSmoothingEnabled=true; x.imageSmoothingQuality='high';
-        x.drawImage(src,0,0,tileSize,tileSize);
-        return t;
+        if(src.width === tileSize && src.height === tileSize) tile=src;
+        else {
+          tile=document.createElement('canvas'); tile.width=tile.height=tileSize; const x=tile.getContext('2d');
+          x.imageSmoothingEnabled=true; x.imageSmoothingQuality='high';
+          x.drawImage(src,0,0,tileSize,tileSize);
+        }
+      } else {
+        tile=makeMandalaTile(tileSize);
       }
-      return makeMandalaTile(tileSize);
+      __tileCache={key,canvas:tile};
+      return tile;
+    }
+
+    function makeGuideCacheKey(W,H){
+      return [
+        W,H,imgSerial,
+        imgEl ? imgEl.width : 0, imgEl ? imgEl.height : 0,
+        imgScaleEl.value, blurEl.value, edgeThrEl.value, dilateEl.value,
+        borderWidthEl.value, methodEl.value, thrFixedEl.value, invertSel.value,
+        mosaicVisible ? 1 : 0, lanternOn ? 1 : 0,
+        tileEl.value, strokeEl.value, spokesEl.value, ringsEl.value, styleEl.value,
+        Math.round(tileOffsetX*100)/100, Math.round(tileOffsetY*100)/100,
+        window.__useCustomTile ? 1 : 0, window.__customTileVersion || 0, window.__customBgColor || ''
+      ].join('|');
     }
 
     function paintTo(ctxTarget,W,H){
-      const tileSize=parseInt(tileEl.value,10);
-      const tile=(typeof getCurrentTileCanvas==='function')?getCurrentTileCanvas(tileSize):makeMandalaTile(tileSize);
-      const pat=ctxTarget.createPattern(tile,'repeat');
+      const guideKey=makeGuideCacheKey(W,H);
+
+      // The mandala/mask/border composition is independent from the user's
+      // paint layer. Cache it so painting only composites two canvases instead
+      // of rebuilding masks and patterns on every pointer movement.
+      if(!__baseCanvas || __guideCacheKey!==guideKey){
+        const tileSize=parseInt(tileEl.value,10);
+        const tile=(typeof getCurrentTileCanvas==='function')?getCurrentTileCanvas(tileSize):makeMandalaTile(tileSize);
+        const bx=getBaseContext(W,H);
+        const pat=bx.createPattern(tile,'repeat');
+
+        bx.fillStyle='#fff'; bx.fillRect(0,0,W,H);
+
+        if(!imgEl){
+          if(mosaicVisible && pat){ fillPatternWithOffset(bx, pat, W, H, tileSize); }
+        } else {
+          const b=buildMask();
+          const mask=b.mask, border=b.border;
+          if(mosaicVisible && pat){
+            fillPatternWithOffset(bx, pat, W, H, tileSize);
+            bx.save();
+            bx.globalCompositeOperation=(invertSel.value==='outside')?'destination-out':'destination-in';
+            bx.drawImage(mask,0,0);
+            bx.restore();
+          }
+          bx.drawImage(border,0,0);
+        }
+
+        __guideCacheKey=guideKey;
+        // Transparent areas are non-barriers just like the previous white guide
+        // backing, so the same cached pixels can drive the bucket tool.
+        updateGuideData(bx,W,H);
+      } else if(!guideData && !panMode && !draggingPan && !drawing){
+        try{ guideData=__baseCtx.getImageData(0,0,W,H); }catch(_){ guideData=null; }
+      }
 
       ctxTarget.save();
-      ctxTarget.fillStyle='#fff'; ctxTarget.fillRect(0,0,W,H);
-      ctxTarget.restore();
-
-      if(!imgEl){
-        if(mosaicVisible && pat) fillPatternWithOffset(ctxTarget, pat, W, H, tileSize);
-        const g=document.createElement('canvas'); g.width=W; g.height=H; const gx=g.getContext('2d');
-        gx.fillStyle='#fff'; gx.fillRect(0,0,W,H);
-        if(mosaicVisible && pat) fillPatternWithOffset(gx, pat, W, H, tileSize);
-        (function(){
-          var __ctx = gx;
-          __ctx.save();
-          __ctx.globalCompositeOperation = 'destination-over';
-          __ctx.fillStyle = '#ffffff';
-          var __c = __ctx.canvas;
-          __ctx.fillRect(0, 0, __c.width, __c.height);
-          __ctx.restore();
-        })();
-                guideData=gx.getImageData(0,0,W,H);
-        if(paintLayer){ ctxTarget.drawImage(paintLayer,0,0,W,H); }
-        return;
-      }
-
-      const b=buildMask();
-      const mask=b.mask, border=b.border;
-
-      if(mosaicVisible && pat){
-        fillPatternWithOffset(ctxTarget, pat, W, H, tileSize);
-        ctxTarget.save();
-        if(invertSel.value==='outside'){ ctxTarget.globalCompositeOperation='destination-out'; }
-        else { ctxTarget.globalCompositeOperation='destination-in'; }
-        ctxTarget.drawImage(mask,0,0);
-        ctxTarget.restore();
-      }
-
-      ctxTarget.drawImage(border,0,0);
-
-      const g=document.createElement('canvas'); g.width=W; g.height=H; const gx=g.getContext('2d');
-      gx.fillStyle='#fff'; gx.fillRect(0,0,W,H);
-      if(mosaicVisible && pat){
-        fillPatternWithOffset(gx, pat, W, H, tileSize);
-        if(invertSel.value==='outside'){ gx.globalCompositeOperation='destination-out'; } else { gx.globalCompositeOperation='destination-in'; }
-        gx.drawImage(mask,0,0);
-      }
-      gx.drawImage(border,0,0);
-      (function(){
-        var __ctx = gx;
-        __ctx.save();
-        __ctx.globalCompositeOperation = 'destination-over';
-        __ctx.fillStyle = '#ffffff';
-        var __c = __ctx.canvas;
-        __ctx.fillRect(0, 0, __c.width, __c.height);
-        __ctx.restore();
-      })();
-            guideData=gx.getImageData(0,0,W,H);
-
+      ctxTarget.globalCompositeOperation='source-over';
+      ctxTarget.clearRect(0,0,W,H);
+      ctxTarget.drawImage(__baseCanvas,0,0,W,H);
       if(paintLayer){ ctxTarget.drawImage(paintLayer,0,0,W,H); }
+      ctxTarget.restore();
     }
 
     function applyBgModeVisual(){
@@ -922,19 +1097,35 @@ ${startxref}
 
       ox.imageSmoothingEnabled = true;
       ox.imageSmoothingQuality = 'high';
+      const exportCustomBg = (window.__useCustomTile && window.__customBgColor) ? window.__customBgColor : null;
       if(mode==='white' || fmt==='jpeg' || fmt==='pdf'){
-        ox.fillStyle = (mode==='inverted') ? '#000' : '#fff';
+        // In inverted mode, transparent pixels must start white so the final
+        // inversion makes them black. With a custom background, preserve it.
+        ox.fillStyle = (mode==='inverted') ? (exportCustomBg || '#fff') : '#fff';
         ox.fillRect(0,0,W,H);
       } else if(mode==='inverted'){
-        ox.fillStyle = '#000';
+        ox.fillStyle = exportCustomBg || '#fff';
         ox.fillRect(0,0,W,H);
       }
       ox.drawImage(canvas, 0, 0, W, H);
 
       if(mode==='inverted'){
-        const imgData = ox.getImageData(0,0,W,H);
-        const d = imgData.data;
-        for(let i=0;i<d.length;i+=4){ d[i]=255-d[i]; d[i+1]=255-d[i+1]; d[i+2]=255-d[i+2]; }
+        const imgData=ox.getImageData(0,0,W,H);
+        const d=imgData.data;
+        const preserveCustomBg=!!(window.__useCustomTile && window.__customBgColor);
+        const bgRGB=preserveCustomBg ? hexToRGB(window.__customBgColor) : null;
+        const tol=5;
+        for(let i=0;i<d.length;i+=4){
+          const isBg=bgRGB && d[i+3]>0 &&
+            Math.abs(d[i]-bgRGB[0])<=tol &&
+            Math.abs(d[i+1]-bgRGB[1])<=tol &&
+            Math.abs(d[i+2]-bgRGB[2])<=tol;
+          if(isBg){
+            d[i]=bgRGB[0]; d[i+1]=bgRGB[1]; d[i+2]=bgRGB[2];
+          }else{
+            d[i]=255-d[i]; d[i+1]=255-d[i+1]; d[i+2]=255-d[i+2];
+          }
+        }
         ox.putImageData(imgData,0,0);
       }
 
@@ -1003,7 +1194,7 @@ ${startxref}
     });
 
     let paintOn=false, paintLayer=null, pctx=null, currentColor='#ff9900', erase=false, tool='bucket', drawing=false;
-    function ensurePaint(){ if(!paintLayer){ paintLayer=document.createElement('canvas'); paintLayer.width=canvas.width; paintLayer.height=canvas.height; pctx=paintLayer.getContext('2d'); } }
+    function ensurePaint(){ if(!paintLayer){ paintLayer=document.createElement('canvas'); paintLayer.width=canvas.width; paintLayer.height=canvas.height; pctx=paintLayer.getContext('2d',{willReadFrequently:true}); } }
     function getClickXY(evt){ const r=canvas.getBoundingClientRect(); const x=(evt.clientX-r.left)*(canvas.width/r.width); const y=(evt.clientY-r.top)*(canvas.height/r.height); return {x:Math.floor(x),y:Math.floor(y)}; }
     function isBarrier(i,data){
   var a = data[i+3];
@@ -1061,7 +1252,7 @@ ${startxref}
           xi++;
         }
       }
-      pctx.putImageData(painted,0,0); render();
+      pctx.putImageData(painted,0,0); scheduleRender();
     }
 
     
@@ -1077,7 +1268,8 @@ ${startxref}
   if(e.pointerType === 'touch') e.preventDefault();
   if(panMode){
     draggingPan = true;
-    panStart = { x: e.clientX, y: e.clientY, ox: tileOffsetX, oy: tileOffsetY };
+    const p0=getClickXY(e);
+    panStart = { x:p0.x, y:p0.y, ox:tileOffsetX, oy:tileOffsetY };
     try{ canvas.setPointerCapture(e.pointerId); }catch(_){ }
     updateCursor(); return;
   }
@@ -1090,12 +1282,14 @@ ${startxref}
     canvas.addEventListener('pointermove', function(e){
   if(e.pointerType === 'touch') e.preventDefault();
   if(panMode && draggingPan){
-    tileOffsetX = panStart.ox + (e.clientX - panStart.x);
-    tileOffsetY = panStart.oy + (e.clientY - panStart.y);
-    render(); return;
+    const pp=getClickXY(e);
+    const nx=panStart.ox + (pp.x-panStart.x);
+    const ny=panStart.oy + (pp.y-panStart.y);
+    if(setPanOffsets(nx,ny)) scheduleRender();
+    return;
   }
   if(!drawing || !paintOn || tool!=='brush') return; const pt=getClickXY(e);
-  pctx.lineTo(pt.x,pt.y); pctx.stroke(); render();
+  pctx.lineTo(pt.x,pt.y); pctx.stroke(); scheduleRender();
 });
     window.addEventListener('pointerup', function(){
   if(panMode && draggingPan){ draggingPan=false; updateCursor(); }
@@ -1112,11 +1306,12 @@ window.addEventListener('pointercancel', function(){
       if(t && (t.tagName==='INPUT' || t.tagName==='SELECT' || t.tagName==='TEXTAREA' || t.isContentEditable)) return;
       const step = e.shiftKey ? 40 : (e.altKey ? 2 : 10);
       let used=false;
-      if(e.key==='ArrowLeft'){ tileOffsetX -= step; used=true; }
-      else if(e.key==='ArrowRight'){ tileOffsetX += step; used=true; }
-      else if(e.key==='ArrowUp'){ tileOffsetY -= step; used=true; }
-      else if(e.key==='ArrowDown'){ tileOffsetY += step; used=true; }
-      if(used){ e.preventDefault(); render(); }
+      let nx=tileOffsetX,ny=tileOffsetY;
+      if(e.key==='ArrowLeft'){ nx -= step; used=true; }
+      else if(e.key==='ArrowRight'){ nx += step; used=true; }
+      else if(e.key==='ArrowUp'){ ny -= step; used=true; }
+      else if(e.key==='ArrowDown'){ ny += step; used=true; }
+      if(used){ e.preventDefault(); if(setPanOffsets(nx,ny)) scheduleRender(); }
     });
 
 
@@ -1127,7 +1322,7 @@ window.addEventListener('pointercancel', function(){
       if(paintOn){
         setPanMode(false);
         ensurePaint();
-        render();
+        scheduleRender();
       }
       updateCursor();
     });
@@ -1136,7 +1331,7 @@ window.addEventListener('pointercancel', function(){
       mosaicVisible = !mosaicVisible;
       mosaicToggle.setAttribute('aria-pressed', mosaicVisible ? 'true' : 'false');
       mosaicToggle.title = I18N[currentLang][ mosaicVisible ? 'mosaicTitleOn' : 'mosaicTitleOff' ];
-      render();
+      scheduleRender();
     });
 
     panToggle.addEventListener('click', function(){
@@ -1151,7 +1346,7 @@ window.addEventListener('pointercancel', function(){
       bucketBtn.setAttribute('aria-pressed','true'); brushBtn.setAttribute('aria-pressed','false'); eraserBtn.setAttribute('aria-pressed','false');
       document.querySelector('#paintOverlay .palette').style.display='flex';
       if(!paintOn){ paintOn=true; paintOverlay.classList.add('show'); paintToggle.setAttribute('aria-pressed','true'); }
-      ensurePaint(); render(); updateCursor();
+      ensurePaint(); scheduleRender(); updateCursor();
     });
     brushBtn.addEventListener('click',function(){
       if(panMode) setPanMode(false);
@@ -1159,13 +1354,13 @@ window.addEventListener('pointercancel', function(){
       bucketBtn.setAttribute('aria-pressed','false'); brushBtn.setAttribute('aria-pressed','true'); eraserBtn.setAttribute('aria-pressed','false');
       document.querySelector('#paintOverlay .palette').style.display='flex';
       if(!paintOn){ paintOn=true; paintOverlay.classList.add('show'); paintToggle.setAttribute('aria-pressed','true'); }
-      ensurePaint(); render(); updateCursor();
+      ensurePaint(); scheduleRender(); updateCursor();
     });
     brushSizeEl && brushSizeEl.addEventListener('input', function(){ brushSizeVal.textContent = this.value + ' px'; });
     palette.addEventListener('click',function(e){ if(panMode) setPanMode(false); const btn=e.target.closest('.swatch'); if(!btn) return; currentColor=btn.getAttribute('data-c'); });
     eraserBtn.addEventListener('click',function(){ if(panMode) setPanMode(false);
       erase=!erase; tool= erase? 'brush':'bucket'; eraserBtn.setAttribute('aria-pressed', erase?'true':'false'); bucketBtn.setAttribute('aria-pressed', erase?'false':'true'); brushBtn.setAttribute('aria-pressed', erase?'true':'false'); document.querySelector('#paintOverlay .palette').style.display= erase? 'none':'flex'; updateCursor(); });
-    clearPaintBtn.addEventListener('click',function(){ if(!paintLayer) return; const prev=canvas.style.cursor; canvas.style.cursor='wait'; setTimeout(function(){ canvas.style.cursor=prev; },250); pctx.clearRect(0,0,paintLayer.width,paintLayer.height); render(); });
+    clearPaintBtn.addEventListener('click',function(){ if(!paintLayer) return; const prev=canvas.style.cursor; canvas.style.cursor='wait'; setTimeout(function(){ canvas.style.cursor=prev; },250); pctx.clearRect(0,0,paintLayer.width,paintLayer.height); scheduleRender(); });
 
     
     
@@ -1200,6 +1395,7 @@ window.addEventListener('pointercancel', function(){
 
     window.__useCustomTile = false;
     window.__customTile = null;
+    window.__customTileVersion = 0;
     
     const customReps = document.getElementById('customReps');
     const customRepsVal = document.getElementById('customRepsVal');
@@ -1333,6 +1529,8 @@ window.addEventListener('pointercancel', function(){
         if(window.__customBgColor){ tx.fillStyle = window.__customBgColor; tx.fillRect(0,0,t.width,t.height); }
         tx.drawImage(cc,0,0);
         window.__customTile = t;
+        window.__customTileVersion = (window.__customTileVersion||0) + 1;
+        resetPerfCaches('tile');
         window.__useCustomTile = true;
         customBtn && customBtn.setAttribute('aria-pressed','true');
         closeCustom();
@@ -1349,6 +1547,7 @@ window.addEventListener('pointercancel', function(){
       customBtn.addEventListener('mousedown', function(){
         pressTimer = setTimeout(function(){
           window.__useCustomTile = !window.__useCustomTile;
+          resetPerfCaches('tile');
           customBtn.setAttribute('aria-pressed', window.__useCustomTile?'true':'false');
           scheduleRender();
         }, 550);
@@ -1362,6 +1561,8 @@ window.addEventListener('pointercancel', function(){
       _resetAll();
       window.__useCustomTile=false;
       window.__customTile=null;
+      window.__customTileVersion=(window.__customTileVersion||0)+1;
+      resetPerfCaches('tile');
       if(customBtn) customBtn.setAttribute('aria-pressed','false');
       if(customOverlay) customOverlay.classList.remove('show');
       if(ccx && cc){ ccx.clearRect(0,0,cc.width,cc.height); }
@@ -1381,7 +1582,7 @@ window.addEventListener('pointercancel', function(){
       document.querySelector('#paintOverlay .palette').style.display='flex';
 
 
-      lastMask=null; lastBorder=null; guideData=null;
+      lastMask=null; lastBorder=null; guideData=null; resetPerfCaches('all');
 
       imgScaleEl.value=100; imgScaleVal.textContent='100%';
       tileEl.value=180; tileVal.textContent='180 px';
@@ -1415,29 +1616,47 @@ window.addEventListener('pointercancel', function(){
     fileBtn.addEventListener('click',function(){ fileInput.click(); });
     fileInput.addEventListener('change',function(){
       const f=fileInput.files&&fileInput.files[0];
+      if(imgEl && typeof imgEl.close==='function'){ try{ imgEl.close(); }catch(_){ } }
+      imgEl=null; imgSerial++; resetPerfCaches('all');
       resetAll(); 
       fileName.textContent=f ? f.name : I18N[currentLang].none;
-      if(f) (async()=>{ try{ infoDiv.textContent=(currentLang==='es'?'Procesando imagen…':'Processing image…'); imgEl=await loadBitmap(f); render(); infoDiv.textContent=''; }catch(e){ showErr((currentLang==='es'?'No se pudo cargar la imagen':'Could not load image'),e); } })();
+      if(f) (async()=>{ try{ infoDiv.textContent=(currentLang==='es'?'Procesando imagen…':'Processing image…'); imgEl=await loadBitmap(f); imgSerial++; resetPerfCaches('all'); render(); infoDiv.textContent=''; }catch(e){ showErr((currentLang==='es'?'No se pudo cargar la imagen':'Could not load image'),e); } })();
     });
 
     
     $('langEs').addEventListener('click', function(){ setLang('es'); });
     $('langEn').addEventListener('click', function(){ setLang('en'); });
 
-    [blurEl,edgeThrEl,dilateEl,borderWidthEl,methodEl,thrFixedEl,invertSel,imgScaleEl,tileEl,strokeEl,spokesEl,ringsEl,styleEl,bgMode]
-      .forEach(function(el){ el.addEventListener('input',function(){
-        if(blurVal) blurVal.textContent=blurEl.value+' px';
-        if(edgeThrVal) edgeThrVal.textContent=edgeThrEl.value;
-        if(dilateVal) dilateVal.textContent=dilateEl.value+' px';
-        if(borderWidthVal) borderWidthVal.textContent=borderWidthEl.value+' px';
-        if(thrFixedVal) thrFixedVal.textContent=thrFixedEl.value;
-        if(imgScaleVal) imgScaleVal.textContent=imgScaleEl.value+'%';
-        if(tileVal) tileVal.textContent=tileEl.value+' px';
-        if(strokeVal) strokeVal.textContent=parseFloat(strokeEl.value).toFixed(1);
-        if(spokesVal) spokesVal.textContent=spokesEl.value;
-        if(ringsVal) ringsVal.textContent=ringsEl.value;
-        render();
-      }); });
+    let __maskInputTimer=0;
+    function scheduleMaskRender(){
+      clearTimeout(__maskInputTimer);
+      // A short debounce prevents several 1.44M-pixel mask rebuilds while a
+      // finger is moving a slider. Labels remain instantaneous.
+      __maskInputTimer=setTimeout(function(){ __maskInputTimer=0; scheduleRender(); }, 55);
+    }
+    function syncControlLabels(){
+      if(blurVal) blurVal.textContent=blurEl.value+' px';
+      if(edgeThrVal) edgeThrVal.textContent=edgeThrEl.value;
+      if(dilateVal) dilateVal.textContent=dilateEl.value+' px';
+      if(borderWidthVal) borderWidthVal.textContent=borderWidthEl.value+' px';
+      if(thrFixedVal) thrFixedVal.textContent=thrFixedEl.value;
+      if(imgScaleVal) imgScaleVal.textContent=imgScaleEl.value+'%';
+      if(tileVal) tileVal.textContent=tileEl.value+' px';
+      if(strokeVal) strokeVal.textContent=parseFloat(strokeEl.value).toFixed(1);
+      if(spokesVal) spokesVal.textContent=spokesEl.value;
+      if(ringsVal) ringsVal.textContent=ringsEl.value;
+    }
+
+    [blurEl,edgeThrEl,dilateEl,borderWidthEl,methodEl,thrFixedEl,invertSel,imgScaleEl]
+      .forEach(function(el){
+        el.addEventListener('input',function(){ syncControlLabels(); scheduleMaskRender(); });
+        el.addEventListener('change',function(){ clearTimeout(__maskInputTimer); __maskInputTimer=0; scheduleRender(); });
+      });
+
+    [tileEl,strokeEl,spokesEl,ringsEl,styleEl]
+      .forEach(function(el){ el.addEventListener('input',function(){ syncControlLabels(); scheduleRender(); }); });
+
+    bgMode.addEventListener('input', applyBgModeVisual);
 
     function showErr(msg,e){ console.error(msg,e||''); infoDiv.textContent='⚠️ '+msg+(e?(' — '+(e.message||e)):''); }
 
@@ -1448,7 +1667,6 @@ window.addEventListener('pointercancel', function(){
 
     applyInitial();
   
-    let lanternOn = false;
     const lanternBtn = document.getElementById('lanternToggle');
     let __rafPending = false;
     function scheduleRender(){
@@ -1474,16 +1692,17 @@ window.addEventListener('pointercancel', function(){
         if(!e.shiftKey) return;
         e.preventDefault();
         draggingShift = true;
-        start = { x:e.clientX, y:e.clientY, ox:tileOffsetX, oy:tileOffsetY };
+        const r=stage.getBoundingClientRect();
+        const sx=(e.clientX-r.left)*(stage.width/r.width), sy=(e.clientY-r.top)*(stage.height/r.height);
+        start = { x:sx, y:sy, ox:tileOffsetX, oy:tileOffsetY };
         stage.setPointerCapture && stage.setPointerCapture(e.pointerId);
       });
       stage.addEventListener('pointermove', function(e){
         if(!draggingShift) return;
-        const dx = e.clientX - start.x;
-        const dy = e.clientY - start.y;
-        tileOffsetX = start.ox + dx;
-        tileOffsetY = start.oy + dy;
-        scheduleRender();
+        const r=stage.getBoundingClientRect();
+        const sx=(e.clientX-r.left)*(stage.width/r.width), sy=(e.clientY-r.top)*(stage.height/r.height);
+        const dx=sx-start.x, dy=sy-start.y;
+        if(setPanOffsets(start.ox+dx,start.oy+dy)) scheduleRender();
       });
       function stop(){ draggingShift=false; start=null; }
       stage.addEventListener('pointerup', stop);
@@ -1499,10 +1718,9 @@ window.addEventListener('pointercancel', function(){
         if(lanternOn){
           try{
             let tileCanvas = (typeof getCurrentTileCanvas==='function') ? getCurrentTileCanvas(tileSize) : ((typeof makeMandalaTile === 'function') ? makeMandalaTile(tileSize) : null);
-            const ox = ((tileOffsetX % tileSize) + tileSize) % tileSize;
-            const oy = ((tileOffsetY % tileSize) + tileSize) % tileSize;
-            const cx = Math.round(W/2 - tileSize/2 + ox);
-            const cy = Math.round(H/2 - tileSize/2 + oy);
+            // Single-motif mode uses an absolute offset: no modulo wrap/jump.
+            const cx = Math.round(W/2 - tileSize/2 + tileOffsetX);
+            const cy = Math.round(H/2 - tileSize/2 + tileOffsetY);
             ctxTarget.save();
             ctxTarget.imageSmoothingEnabled = true;
             ctxTarget.imageSmoothingQuality = 'high';
@@ -1527,32 +1745,34 @@ window.addEventListener('pointercancel', function(){
     })();
 
     (function(){
-      const _oldFlood = floodFill;
       floodFill = function(x,y){
         if(!guideData){ render(); if(!guideData) return; }
         ensurePaint();
         const w=canvas.width,h=canvas.height;
         const g=guideData.data;
-        let screen=null; try{ screen=ctx.getImageData(0,0,w,h).data; }catch(_){}
         const painted=pctx.getImageData(0,0,w,h); const pd=painted.data;
         const idx=(xx,yy)=>(yy*w+xx)*4;
         let s=idx(x,y);
+
+        // A barrier is either a dark guide line or an already-painted dark pixel.
+        // Reading the paint layer we already need avoids a second 5.8 MB readback
+        // from the visible canvas on every bucket fill.
         function isBar(i){
           if(g && g[i+3]>7){
             const y0 = 0.299*g[i] + 0.587*g[i+1] + 0.114*g[i+2];
-            if (y0 < 140) return true;
+            if(y0 < 140) return true;
           }
-          if(screen && screen[i+3]>7){
-            const y1 = 0.299*screen[i] + 0.587*screen[i+1] + 0.114*screen[i+2];
-            if (y1 < 150) return true;
+          if(pd[i+3]>7){
+            const y1 = 0.299*pd[i] + 0.587*pd[i+1] + 0.114*pd[i+2];
+            if(y1 < 150) return true;
           }
           return false;
         }
-        if (isBar(s)){
+        if(isBar(s)){
           let found=false;
-          for (let r=1; r<=2 && !found; r++){
-            for (let dy=-r; dy<=r && !found; dy++){
-              for (let dx=-r; dx<=r && !found; dx++){
+          for(let r=1; r<=2 && !found; r++){
+            for(let dy=-r; dy<=r && !found; dy++){
+              for(let dx=-r; dx<=r && !found; dx++){
                 const nx=x+dx, ny=y+dy; if(nx<0||ny<0||nx>=w||ny>=h) continue;
                 const ni=idx(nx,ny);
                 if(!isBar(ni)){ x=nx; y=ny; s=ni; found=true; }
@@ -1561,24 +1781,32 @@ window.addEventListener('pointercancel', function(){
           }
           if(!found) return;
         }
-        const rgb = hexToRGB(currentColor);
-        const seen = new Uint8Array(w*h);
-        const q=[{x:x,y:y}];
+
+        const rgb=hexToRGB(currentColor);
+        const seen=new Uint8Array(w*h);
+        const q=[y*w+x];
         function cond(xx,yy){
           if(xx<0||yy<0||xx>=w||yy>=h) return false;
-          const i=idx(xx,yy);
-          return !isBar(i) && !seen[yy*w+xx];
+          const p=yy*w+xx;
+          return !seen[p] && !isBar(p*4);
         }
         while(q.length){
-          const p=q.pop(); let xi=p.x; const py=p.y;
+          const seed=q.pop();
+          let xi=seed%w; const py=(seed/w)|0;
           while(xi>=0 && cond(xi,py)) xi--; xi++;
           let up=false,down=false;
           while(xi<w && cond(xi,py)){
-            const di=idx(xi,py); seen[py*w+xi]=1;
+            const pi=py*w+xi, di=pi*4; seen[pi]=1;
             if(erase){ pd[di]=pd[di+1]=pd[di+2]=0; pd[di+3]=0; }
             else { pd[di]=rgb[0]; pd[di+1]=rgb[1]; pd[di+2]=rgb[2]; pd[di+3]=255; }
-            if(py>0){ if(cond(xi,py-1)&&!up){ q.push({x:xi,y:py-1}); up=true; } else if(!cond(xi,py-1)){ up=false; } }
-            if(py<h-1){ if(cond(xi,py+1)&&!down){ q.push({x:xi,y:py+1}); down=true; } else if(!cond(xi,py+1)){ down=false; } }
+            if(py>0){
+              if(cond(xi,py-1) && !up){ q.push((py-1)*w+xi); up=true; }
+              else if(!cond(xi,py-1)){ up=false; }
+            }
+            if(py<h-1){
+              if(cond(xi,py+1) && !down){ q.push((py+1)*w+xi); down=true; }
+              else if(!cond(xi,py+1)){ down=false; }
+            }
             xi++;
           }
         }
@@ -1599,6 +1827,5 @@ window.addEventListener('pointercancel', function(){
     
 })();
   </script>
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"23c74138fc1243dabdc3c1bec1e06b79","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 </html>
