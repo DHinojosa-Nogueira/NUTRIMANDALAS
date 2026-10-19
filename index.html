@@ -282,6 +282,8 @@ button, select, input[type="color"], input[type="range"]{ touch-action:manipulat
   </div>
 
   <div class="topbar">
+    <button id="visitsToggle" type="button" title="Visitas / Visits" aria-label="Visitas / Visits" aria-expanded="false" aria-controls="visitsCount">🧡</button>
+    <span id="visitsCount" hidden><img id="hitsVisits" alt="" height="20" style="vertical-align:middle;display:block" /></span>
     <button id="langEs" title="Español">ES</button>
     <button id="langEn" title="English">EN</button>
     <input id="file" type="file" accept="image/*" style="display:none" />
@@ -1826,6 +1828,23 @@ window.addEventListener('pointercancel', function(){
     })();
     
 })();
+  </script>
+  <script>
+    // Contador Hits (el badge se carga una sola vez por visita; el botón solo lo muestra/oculta).
+    (function () {
+      const toggle = document.getElementById('visitsToggle');
+      const count = document.getElementById('visitsCount');
+      const badge = document.getElementById('hitsVisits');
+      // Mismo contador para la URL del directorio y su versión /index.html en GitHub Pages.
+      const path = location.pathname.replace(/\/index\.html?$/i, '/').replace(/\/$/, '');
+      const key = location.hostname ? location.host + path : 'nutrimandalas-generator-local';
+      badge.src = 'https://hits.sh/' + key + '.svg?label=%E2%80%8B&style=flat-square&color=ff9500&labelColor=ff9500&cb=' + Date.now();
+      badge.onerror = function () { badge.hidden = true; };
+      toggle.addEventListener('click', function () {
+        count.hidden = !count.hidden;
+        toggle.setAttribute('aria-expanded', String(!count.hidden));
+      });
+    })();
   </script>
 </body>
 </html>
